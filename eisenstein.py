@@ -8,29 +8,34 @@ class EisensteinInt:
     Stores the Eisenstein integer in the form a + bω
 
     Create Eisenstein Integer by:
-	     n = EisensteinInt(5,7)  # Create (5 + 7ω)
-	     n = EisensteinInt(13)  # Create (13 + 0ω)
+	     a = EisensteinInt(5,7)  # Create (5 + 7ω)
+	     a = EisensteinInt(13)  # Create (13 + 0ω)
 
     Functions implemented
          Basic functions: init(), ==, hash(),  str(),
 	     Arithmetic functions: abs(), +, divmod(), //, %, *, -
 
-         n.associates() - Returns a list of the product of the number and
+         a.associates() - Returns a list of the product of the number and
             each of the units.
-         n.complex_form() - Returns the complex form.
-         n.conjugate() - Returns an EisensteinInt representing he conjugate.
-         n.norm() - Returns an integer representing the norm.
-         n.polar_form() - Returns a tuple of the radius and angle.
+         a.complex_form() - Returns the complex form.
+         a.conjugate() - Returns an EisensteinInt representing he conjugate.
+         a.norm() - Returns an integer representing the norm.
+         a.polar_form() - Returns a tuple of the radius and angle.
          EisensteinInt.units() - Returns a list of the 6 Eisenstein units
 
-         n.is_even() - Returns whether or not n is even.
-         n.is_prime() - Returns whether or not n is a prime.
-         n.is_unit() - Returns whether or not n is a unit.
+         a.is_even() - Returns whether or not n is even.
+         a.is_prime() - Returns whether or not n is a prime.
+         a.is_unit() - Returns whether or not n is a unit.
 
          a.gcd(b) - Compute the greatest common divisor of a and b.
          a.plot_point() - Plots a single point in a polar plane.
          a.plot_multiples(n,labels) - Plots the multipls of the number n
             degrees out and gives the option to include labels.
+         a.get_multiples(n) - Returns a list of multiples n degrees away
+         EisensteinInt.plot_all(n,prime) - Plots all Eisenstein integers
+            and can highlight the prime numbers
+         EisensteinInt.generate_eisenstein_ints(n) - Generates all EisensteinInt
+            and their multiples through brute force
     """
 
     def __init__(self, real=0, imaginary=0):
