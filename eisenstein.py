@@ -6,17 +6,22 @@ import numpy as np
 class EisensteinInt:
     """
     Stores the Eisenstein integer in the form a + bω
+
     Create Eisenstein Integer by:
-	     n = GaussInt(5,7)  # Create (5 + 7ω)
-	     n = GaussInt(13)  # Create (13 + 0ω)
+	     n = EisensteinInt(5,7)  # Create (5 + 7ω)
+	     n = EisensteinInt(13)  # Create (13 + 0ω)
+
     Functions implemented
          Basic functions: init(), ==, hash(),  str(),
 	     Arithmetic functions: abs(), +, divmod(), //, %, *, -
 
+         n.associates() - Returns a list of the product of the number and
+            each of the units.
          n.complex_form() - Returns the complex form.
-         n.conjugate() - Returns the conjugate.
-         n.norm() - Returns the norm.
-         n.polar_form() - Returns the radius and angle.
+         n.conjugate() - Returns an EisensteinInt representing he conjugate.
+         n.norm() - Returns an integer representing the norm.
+         n.polar_form() - Returns a tuple of the radius and angle.
+         n.units() - Returns a list of the 6 Eisenstein units
 
          n.is_even() - Returns whether or not n is even.
          n.is_prime() - Returns whether or not n is a prime.
@@ -125,6 +130,11 @@ class EisensteinInt:
 
         return EisensteinInt(difference_real, difference_imaginary)
 
+    def associates(self):
+        units = self.units()
+        associates = list(map(lambda x: x * self, units))
+        return associates
+
     def complex_form(self):
         r = self.real
         i = self.imaginary
@@ -174,6 +184,14 @@ class EisensteinInt:
                 angle = np.pi - angle
 
         return (r, angle)
+
+    def units(self):
+        units = []
+        unit = EisensteinInt(1,0)
+        for i in range(6):
+            units.append(unit)
+            unit = unit * EisensteinInt(1, 1)
+        return units
 
     def is_even(self):
         # is_even iff. a+b is congruent to 0 mod 3
@@ -245,11 +263,11 @@ class EisensteinInt:
         return plt
 
     def plot_multiples(self, n=2, labels=True):
-        UNITS = [EisensteinInt(1, 0), EisensteinInt(1, 1), EisensteinInt(0, 1), EisensteinInt(-1, 0), EisensteinInt(-1, -1), EisensteinInt(0, -1)]
+        units = self.units()
 
-        multiples = UNITS
+        multiples = units
         for i in range(1, n):
-            multiples = self.__find_multiples(multiples, UNITS)
+            multiples = self.__find_multiples(multiples, units)
         multiples = list(map(lambda x: x * self,multiples))
 
         for multiple in multiples:
