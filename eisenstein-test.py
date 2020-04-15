@@ -68,8 +68,9 @@ class EisensteinIntTest(unittest.TestCase):
         b=EisensteinInt(6,0)
         self.assertEqual(a.gcd(b), EisensteinInt(6,0))
 
-        a=EisensteinInt(12,0)
-        b=EisensteinInt(6,0)
-        self.assertEqual(a.gcd(b), EisensteinInt(6,0))
+        a=EisensteinInt(20,0)
+        b=EisensteinInt(12,0)
+        self.assertEqual(a.gcd(b), EisensteinInt(4,0))
+
 if (__name__ == '__main__'):
     unittest.main()
