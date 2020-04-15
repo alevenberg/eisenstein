@@ -1,4 +1,8 @@
 from sympy import isprime
+from math import sqrt, pi, sin, cos
+from cmath import polar
+import matplotlib.pyplot as plt
+import numpy as np
 
 class EisensteinInt:
     """
@@ -36,6 +40,9 @@ class EisensteinInt:
             return (self.real == other.real) and (self.imaginary == other.imaginary)
         else:
             return False
+
+    def __abs__(self):
+        return sqrt(self.norm())
 
     def __add__(self, other):
         if isinstance(other, int):
@@ -182,6 +189,52 @@ class EisensteinInt:
 
         return a
 
+    def complex_form(self):
+        r = self.real
+        i = self.imaginary
+
+        real =  r + (i * (-1/2))
+        imag = (i * sqrt(3)) / 2
+
+        return complex(real, imag)
+
+    def polar_form(self):
+        radius, phi = polar(a.complex_form())
+        # phi = phi * 180 /pi # To debug: turn into degree
+
+        r = abs(self)
+        assert(radius == r)
+
+        return (polar(a.complex_form()))
+
+    # def plot_multiples(self):
+
+
+
+    def plot_point(self):
+        length, angle = self.polar_form()
+        # Angle in radians
+        # x = length * cos(angle)
+        # y = length * sin(angle)
+
+        r = self.real
+        i = self.imaginary
+
+        plt.polar(angle, length, 'ro')
+        plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
+
+        plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
+        plt.rgrids(np.arange(0,length + 1,1), labels=[])
+
+        plt.show()
+
+a = EisensteinInt(1, -2)
+# a = EisensteinInt(1, 1)
+r, phi = polar(a.complex_form())
+phi = phi * 180 /pi
+radius = abs(a)
+a.plot_point()
+print(r, radius, phi)
 # Sources
 # http://math.bu.edu/people/jsweinst/Teaching/MA341Spring18/MA341Notes.pdf
 # https://proofwiki.org/wiki/Norm_of_Eisenstein_Integer
@@ -191,3 +244,4 @@ class EisensteinInt:
 # http://hackage.haskell.org/package/arithmoi-0.8.0.0/docs/Math-NumberTheory-Quadratic-EisensteinIntegers.html
 # https://thekeep.eiu.edu/cgi/viewcontent.cgi?article=3459&context=theses
 # https://mathworld.wolfram.com/EisensteinPrime.html
+# https://stackoverflow.com/questions/28417604/plotting-a-line-from-a-coordinate-with-and-angle
