@@ -1,6 +1,5 @@
 from sympy import isprime
 from math import sqrt, pi, sin, cos, atan
-from cmath import polar
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -11,17 +10,22 @@ class EisensteinInt:
 	     n = GaussInt(5,7)  # Create (5 + 7ω)
 	     n = GaussInt(13)  # Create (13 + 0ω)
     Functions implemented
-         Basic functions: init(), ==, str()
-	     Arithmetic functions: +, -, *, //, %, divmod()
+         Basic functions: init(), ==, hash(),  str(),
+	     Arithmetic functions: abs(), +, divmod(), //, %, *, -
 
-         n.norm() - Returns the norm.
+         n.complex_form() - Returns the complex form.
          n.conjugate() - Returns the conjugate.
+         n.norm() - Returns the norm.
+         n.polar_form() - Returns the radius and angle.
 
-         n.is_unit() - Returns whether or not n is a unit.
          n.is_even() - Returns whether or not n is even.
          n.is_prime() - Returns whether or not n is a prime.
+         n.is_unit() - Returns whether or not n is a unit.
 
          a.gcd(b) - Compute the greatest common divisor of a and b.
+         a.plot_point() - Plots a single point in a polar plane.
+         a.plot_multiples(n,labels) - Plots the multipls of the number n
+            degrees out and gives the option to include labels.
     """
 
     def __init__(self, real=0, imaginary=0):
@@ -31,10 +35,6 @@ class EisensteinInt:
         self.real = real
         self.imaginary = imaginary
 
-    def __str__(self):
-        result = "EisensteinInt({}, {})".format(self.real, self.imaginary)
-        return result
-
     def __hash__(self):
         return hash((self.real, self.imaginary))
 
@@ -43,6 +43,10 @@ class EisensteinInt:
             return (self.real == other.real) and (self.imaginary == other.imaginary)
         else:
             return False
+
+    def __str__(self):
+        result = "EisensteinInt({}, {})".format(self.real, self.imaginary)
+        return result
 
     def __abs__(self):
         return sqrt(self.norm())
@@ -88,20 +92,6 @@ class EisensteinInt:
 
         return quotient
 
-    def __sub__(self, other):
-        if isinstance(other, int):
-            other = EisensteinInt(other)
-
-        a = self.real
-        b = self.imaginary
-        c = other.real
-        d = other.imaginary
-
-        difference_real = a - c
-        difference_imaginary = b - d
-
-        return EisensteinInt(difference_real, difference_imaginary)
-
     def __mod__(self, other):
         q, r = divmod(self, other)
         return r
@@ -121,13 +111,28 @@ class EisensteinInt:
 
         return EisensteinInt(product_real, product_imaginary)
 
-    def norm(self):
-        # Norm(a) = a^2 - ab + b^2
+    def __sub__(self, other):
+        if isinstance(other, int):
+            other = EisensteinInt(other)
 
         a = self.real
         b = self.imaginary
-        norm = a**2 - a*b + b**2
-        return norm
+        c = other.real
+        d = other.imaginary
+
+        difference_real = a - c
+        difference_imaginary = b - d
+
+        return EisensteinInt(difference_real, difference_imaginary)
+
+    def complex_form(self):
+        r = self.real
+        i = self.imaginary
+
+        real =  r + (i * (-1/2))
+        imag = (i * sqrt(3)) / 2
+
+        return complex(real, imag)
 
     def conjugate(self):
 
@@ -138,11 +143,37 @@ class EisensteinInt:
         conjugate_imag = -b
         return EisensteinInt(conjugate_real, conjugate_imag)
 
-    def is_unit(self):
-        if (self.norm() == 1):
-            return True
+    def norm(self):
+        # Norm(a) = a^2 - ab + b^2
+
+        a = self.real
+        b = self.imaginary
+        norm = a**2 - a*b + b**2
+        return norm
+
+    def polar_form(self):
+        r = abs(self)
+
+        a = self.real
+        b = self.imaginary
+
+        x = ((2*a -b)/2)* sqrt(3)
+        y = b*3/2
+
+        if x == 0 and y >0:
+            angle = pi/2
+        elif x == 0 and y <0:
+            angle = -1 * pi/2
         else:
-            return False
+            angle = atan(y/x)
+
+        if (x < 0):
+            if (y != 0):
+                angle = angle + pi
+            else:
+                angle = np.pi - angle
+
+        return (r, angle)
 
     def is_even(self):
         # is_even iff. a+b is congruent to 0 mod 3
@@ -178,6 +209,12 @@ class EisensteinInt:
         else:
             return False
 
+    def is_unit(self):
+        if (self.norm() == 1):
+            return True
+        else:
+            return False
+
     def gcd(self, other):
 
         a = self
@@ -192,15 +229,6 @@ class EisensteinInt:
 
         return a
 
-    def complex_form(self):
-        r = self.real
-        i = self.imaginary
-
-        real =  r + (i * (-1/2))
-        imag = (i * sqrt(3)) / 2
-
-        return complex(real, imag)
-
     def plot_point(self):
         length, angle = self.polar_form()
 
@@ -211,40 +239,18 @@ class EisensteinInt:
         plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
 
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
-        plt.rgrids(np.arange(0,length + 1,1), labels=[])
+        plt.rgrids(np.arange(0,length,1), labels=[])
 
         plt.show()
-
-    def polar_form(self):
-        r = abs(self)
-
-        a = self.real
-        b = self.imaginary
-
-        x = ((2*a -b)/2)* sqrt(3)
-        y = b*3/2
-
-        if x == 0 and y >0:
-            angle = pi/2
-        elif x == 0 and y <0:
-            angle = -1 * pi/2
-        else:
-            angle = atan(y/x)
-
-        if (x < 0):
-            if (y != 0):
-                angle = angle + pi
-            else:
-                angle = np.pi - angle
-
-        return (r, angle)
+        return plt
 
     def plot_multiples(self, n=2, labels=True):
         UNITS = [EisensteinInt(1, 0), EisensteinInt(1, 1), EisensteinInt(0, 1), EisensteinInt(-1, 0), EisensteinInt(-1, -1), EisensteinInt(0, -1)]
 
         multiples = UNITS
         for i in range(1, n):
-            multiples = self.find_multiples(multiples, UNITS)
+            multiples = self.__find_multiples(multiples, UNITS)
+        multiples = list(map(lambda x: x * self,multiples))
 
         for multiple in multiples:
             length, angle = multiple.polar_form()
@@ -252,17 +258,24 @@ class EisensteinInt:
             r = multiple.real
             i = multiple.imaginary
 
-            plt.polar(angle, length, 'bo')
+            if multiple == self:
+                plt.polar(angle, length, 'ro')
+            else:
+                plt.polar(angle, length, 'bo')
             if (labels):
                 plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
 
-        r = abs(self)
+        radius = abs(self)
+
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
-        plt.rgrids(np.arange(0,length,r), labels=[])
+        plt.rgrids(np.arange(0,length,radius), labels=[])
 
         plt.show()
 
-    def find_multiples(self, multiples, units):
+        return plt
+
+    def __find_multiples(self, multiples, units):
+        # Private helper function
         rv = set()
         for i in multiples:
             for j in units:
@@ -272,10 +285,6 @@ class EisensteinInt:
 
         return rv
 
-    # def plot_multiples_helper(self, multiples, n):
-
-a = EisensteinInt(1,0)
-a.plot_multiples(n=4, labels=False)
 
 # Sources
 # http://math.bu.edu/people/jsweinst/Teaching/MA341Spring18/MA341Notes.pdf
