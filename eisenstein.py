@@ -181,6 +181,8 @@ class EisensteinInt:
             angle = pi/2
         elif x == 0 and y <0:
             angle = -1 * pi/2
+        elif x == 0 and y == 0:
+            angle = 0
         else:
             angle = atan(y/x)
 
@@ -256,7 +258,12 @@ class EisensteinInt:
         return a
 
     def plot_point(self):
+        max_len = 0
+
         length, angle = self.polar_form()
+
+        if (length > max_len):
+            max_len = length
 
         r = self.real
         i = self.imaginary
@@ -265,21 +272,21 @@ class EisensteinInt:
         plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
 
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
-        plt.rgrids(np.arange(0,length,1), labels=[])
+        plt.rgrids(np.arange(0,max_len,max_len/10), labels=[])
 
         plt.show()
         return plt
 
     def plot_multiples(self, n=2, labels=True):
-        units = EisensteinInt.units()
+        max_len = 0
 
-        multiples = units
-        for i in range(1, n):
-            multiples = self.__find_multiples(multiples, units)
-        multiples = list(map(lambda x: x * self,multiples))
+        multiples = self.get_multiples(n)
 
         for multiple in multiples:
             length, angle = multiple.polar_form()
+
+            if (length > max_len):
+                max_len = length
 
             r = multiple.real
             i = multiple.imaginary
@@ -291,14 +298,21 @@ class EisensteinInt:
             if (labels):
                 plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
 
-        radius = abs(self)
-
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
-        plt.rgrids(np.arange(0,length,radius), labels=[])
+        plt.rgrids(np.arange(0,max_len,max_len/10), labels=[])
 
         plt.show()
 
         return plt
+
+    def get_multiples(self, n):
+        units = EisensteinInt.units()
+
+        multiples = units
+        for i in range(1, n):
+            multiples = self.__find_multiples(multiples, units)
+        multiples = list(map(lambda x: x * self,multiples))
+        return multiples
 
     def __find_multiples(self, multiples, units):
         # Private helper function
@@ -311,37 +325,52 @@ class EisensteinInt:
 
         return rv
 
-    def plot_list(self, points):
+    @staticmethod
+    def plot_list(points, primes=False, labels=False):
+        max_len = 0
         for pt in points:
             length, angle = pt.polar_form()
 
-            r = multiple.real
-            i = multiple.imaginary
+            if (length > max_len):
+                max_len = length
 
-            if multiple == self:
+            r = pt.real
+            i = pt.imaginary
+
+            if pt.is_prime():
                 plt.polar(angle, length, 'ro')
             else:
                 plt.polar(angle, length, 'bo')
             if (labels):
                 plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
 
-        radius = abs(self)
-
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
-        plt.rgrids(np.arange(0,length,radius), labels=[])
+        plt.rgrids(np.arange(0,max_len,max_len/10), labels=[])
 
         plt.show()
 
         return plt
 
-    # def plot_all(self, n=3 prime=False):
+    @staticmethod
+    def plot_all(n=4, prime=False):
+        ei = EisensteinInt.generate_eisenstein_ints(n)
+        EisensteinInt.plot_list(ei, prime)
 
-    def generate_eisenstein_ints(min_real=0, max_real=0, min_imag=0, max_imag=0):
-        eis = []
+    @staticmethod
+    def generate_eisenstein_ints(n):
+        min_real = -1 * n
+        min_imag = -1 * n
+        max_real = n
+        max_imag = n
+
+        eis = set()
         for r in range(min_real, max_real):
             for i in range(min_imag, max_imag):
                 ei = EisensteinInt(r, i)
-                eis.append()
+                multiples = ei.get_multiples(n)
+                for m in multiples:
+                    eis.add(m)
+                eis.add(ei)
         return eis
 
     # def factor():

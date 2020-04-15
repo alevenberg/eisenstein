@@ -19,3 +19,8 @@ a.plot_multiples(n=10, labels=False)
 a = EisensteinInt(2,19)
 a.plot_point()
 a.plot_multiples(n=15, labels=False)
+
+EisensteinInt.plot_all(n=1, prime=True)
+EisensteinInt.plot_all(n=2,prime=True)
+EisensteinInt.plot_all(n=3,prime=True)
+EisensteinInt.plot_all(prime=True)
