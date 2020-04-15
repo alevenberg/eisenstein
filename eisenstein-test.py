@@ -43,6 +43,15 @@ class EisensteinIntTest(unittest.TestCase):
         self.assertFalse(EisensteinInt(3,0).is_prime())
         self.assertFalse(EisensteinInt(7,0).is_prime())
 
+    def test_units(self):
+        units = EisensteinInt.units()
+        self.assertEqual(EisensteinInt(1,0), units[0])
+        self.assertEqual(EisensteinInt(-1,0), units[1])
+        self.assertEqual(EisensteinInt(0,1), units[2])
+        self.assertEqual(EisensteinInt(0,-1), units[3])
+        self.assertEqual(EisensteinInt(-1,-1), units[4])
+        self.assertEqual(EisensteinInt(1,1), units[5])
+
     def test_is_even(self):
         # Even iff. norm congruent to 0 mod 3
         # Not even iff. norm congruent to 1 mod 3

@@ -21,7 +21,7 @@ class EisensteinInt:
          n.conjugate() - Returns an EisensteinInt representing he conjugate.
          n.norm() - Returns an integer representing the norm.
          n.polar_form() - Returns a tuple of the radius and angle.
-         n.units() - Returns a list of the 6 Eisenstein units
+         EisensteinInt.units() - Returns a list of the 6 Eisenstein units
 
          n.is_even() - Returns whether or not n is even.
          n.is_prime() - Returns whether or not n is a prime.
@@ -131,7 +131,7 @@ class EisensteinInt:
         return EisensteinInt(difference_real, difference_imaginary)
 
     def associates(self):
-        units = self.units()
+        units = EisensteinInt.units()
         associates = list(map(lambda x: x * self, units))
         return associates
 
@@ -185,7 +185,8 @@ class EisensteinInt:
 
         return (r, angle)
 
-    def units(self):
+    @staticmethod
+    def units():
         units = []
         unit = EisensteinInt(1,0)
         for i in range(6):
@@ -263,7 +264,7 @@ class EisensteinInt:
         return plt
 
     def plot_multiples(self, n=2, labels=True):
-        units = self.units()
+        units = EisensteinInt.units()
 
         multiples = units
         for i in range(1, n):
@@ -303,6 +304,11 @@ class EisensteinInt:
 
         return rv
 
+    # def plot_all(self, prime=False):
+
+    # def factor():
+
+    # def factors():
 
 # Sources
 # http://math.bu.edu/people/jsweinst/Teaching/MA341Spring18/MA341Notes.pdf
