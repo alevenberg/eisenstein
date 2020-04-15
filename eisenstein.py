@@ -50,6 +50,13 @@ class EisensteinInt:
             return False
 
     def __str__(self):
+        a = self.real
+        b = self.imaginary
+
+        result = "{r} + {i}ω".format(r=str(a), i=str(b))
+        return result
+
+    def __debug_str(self):
         result = "EisensteinInt({}, {})".format(self.real, self.imaginary)
         return result
 
@@ -304,7 +311,38 @@ class EisensteinInt:
 
         return rv
 
-    # def plot_all(self, prime=False):
+    def plot_list(self, points):
+        for pt in points:
+            length, angle = pt.polar_form()
+
+            r = multiple.real
+            i = multiple.imaginary
+
+            if multiple == self:
+                plt.polar(angle, length, 'ro')
+            else:
+                plt.polar(angle, length, 'bo')
+            if (labels):
+                plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
+
+        radius = abs(self)
+
+        plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
+        plt.rgrids(np.arange(0,length,radius), labels=[])
+
+        plt.show()
+
+        return plt
+
+    # def plot_all(self, n=3 prime=False):
+
+    def generate_eisenstein_ints(min_real=0, max_real=0, min_imag=0, max_imag=0):
+        eis = []
+        for r in range(min_real, max_real):
+            for i in range(min_imag, max_imag):
+                ei = EisensteinInt(r, i)
+                eis.append()
+        return eis
 
     # def factor():
 

@@ -46,11 +46,29 @@ class EisensteinIntTest(unittest.TestCase):
     def test_units(self):
         units = EisensteinInt.units()
         self.assertEqual(EisensteinInt(1,0), units[0])
-        self.assertEqual(EisensteinInt(-1,0), units[1])
+        self.assertEqual(EisensteinInt(1,1), units[1])
         self.assertEqual(EisensteinInt(0,1), units[2])
-        self.assertEqual(EisensteinInt(0,-1), units[3])
+        self.assertEqual(EisensteinInt(-1,0), units[3])
         self.assertEqual(EisensteinInt(-1,-1), units[4])
-        self.assertEqual(EisensteinInt(1,1), units[5])
+        self.assertEqual(EisensteinInt(0,-1), units[5])
+
+    def test_str(self):
+        # self.assertEqual(str(EisensteinInt(1,0)), "1")
+        # self.assertEqual(str(EisensteinInt(0,0)), "0")
+        # self.assertEqual(str(EisensteinInt(1,1)), "1 + ω")
+        # self.assertEqual(str(EisensteinInt(1,-1)), "1 - ω")
+        self.assertEqual(str(EisensteinInt(1,-2)), "1 + -2ω")
+        # self.assertEqual(str(EisensteinInt(0, 1)), "ω")
+        self.assertEqual(str(EisensteinInt(1,2)), "1 + 2ω")
+
+    def test_associates(self):
+        associates = EisensteinInt(2,1).associates()
+        # self.assertEqual(EisensteinInt(2,1), associates[0])
+        # self.assertEqual(EisensteinInt(1,1), associates[1])
+        # self.assertEqual(EisensteinInt(0,1), associates[2])
+        # self.assertEqual(EisensteinInt(-1,0), associates[3])
+        # self.assertEqual(EisensteinInt(-1,-1), associates[4])
+        # self.assertEqual(EisensteinInt(0,-1), associates[5])
 
     def test_is_even(self):
         # Even iff. norm congruent to 0 mod 3
