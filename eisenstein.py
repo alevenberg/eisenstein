@@ -1,5 +1,5 @@
 from sympy import isprime
-from math import sqrt, pi, sin, cos
+from math import sqrt, pi, sin, cos, atan
 from cmath import polar
 import matplotlib.pyplot as plt
 import numpy as np
@@ -198,24 +198,8 @@ class EisensteinInt:
 
         return complex(real, imag)
 
-    def polar_form(self):
-        radius, phi = polar(a.complex_form())
-        # phi = phi * 180 /pi # To debug: turn into degree
-
-        r = abs(self)
-        assert(radius == r)
-
-        return (polar(a.complex_form()))
-
-    # def plot_multiples(self):
-
-
-
     def plot_point(self):
         length, angle = self.polar_form()
-        # Angle in radians
-        # x = length * cos(angle)
-        # y = length * sin(angle)
 
         r = self.real
         i = self.imaginary
@@ -228,13 +212,57 @@ class EisensteinInt:
 
         plt.show()
 
-a = EisensteinInt(1, -2)
-# a = EisensteinInt(1, 1)
-r, phi = polar(a.complex_form())
-phi = phi * 180 /pi
-radius = abs(a)
-a.plot_point()
-print(r, radius, phi)
+    def polar_form(self):
+        # radius, phi = polar(a.complex_form())
+        # phi = phi * 180 /pi # To debug: turn into degree
+
+        # r = abs(self)
+        # assert(radius == r)
+        # print(a.complex_form())
+        return (polar(a.complex_form()))
+
+    def get_full_polar_form(self):
+        r = abs(self)
+
+        a = self.real
+        b = self.imaginary
+
+        x = ((2*a -b)/2)* sqrt(3)
+        y = b*3/2
+
+        angle = atan(y/x)
+
+        if (x < 0):
+            if (y != 0):
+                angle = angle + pi
+            else:
+                angle = np.pi - angle
+
+        return (r, angle)
+
+    def plot_multiples(self, n=2):
+        UNITS = [EisensteinInt(1, 0), EisensteinInt(1, 1), EisensteinInt(0, 1), EisensteinInt(-1, 0), EisensteinInt(-1, -1), EisensteinInt(0, -1)]
+
+        for i in range(1, n+1):
+            multiples = list(map(lambda x: self * x * i, UNITS))
+            for multiple in multiples:
+                length, angle = multiple.get_full_polar_form()
+
+                r = multiple.real
+                i = multiple.imaginary
+
+                plt.polar(angle, length, 'ro')
+                plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
+
+        plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
+        # plt.rgrids(np.arange(0,(length * (n)),length), labels=[])
+
+        plt.show()
+
+
+a = EisensteinInt(1,-2)
+a.plot_multiples()
+
 # Sources
 # http://math.bu.edu/people/jsweinst/Teaching/MA341Spring18/MA341Notes.pdf
 # https://proofwiki.org/wiki/Norm_of_Eisenstein_Integer
