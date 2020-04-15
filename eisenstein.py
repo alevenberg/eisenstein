@@ -35,6 +35,9 @@ class EisensteinInt:
         result = "EisensteinInt({}, {})".format(self.real, self.imaginary)
         return result
 
+    def __hash__(self):
+        return hash((self.real, self.imaginary))
+
     def __eq__(self, other):
         if isinstance(other, EisensteinInt):
             return (self.real == other.real) and (self.imaginary == other.imaginary)
@@ -213,15 +216,6 @@ class EisensteinInt:
         plt.show()
 
     def polar_form(self):
-        # radius, phi = polar(a.complex_form())
-        # phi = phi * 180 /pi # To debug: turn into degree
-
-        # r = abs(self)
-        # assert(radius == r)
-        # print(a.complex_form())
-        return (polar(a.complex_form()))
-
-    def get_full_polar_form(self):
         r = abs(self)
 
         a = self.real
@@ -230,7 +224,12 @@ class EisensteinInt:
         x = ((2*a -b)/2)* sqrt(3)
         y = b*3/2
 
-        angle = atan(y/x)
+        if x == 0 and y >0:
+            angle = pi/2
+        elif x == 0 and y <0:
+            angle = -1 * pi/2
+        else:
+            angle = atan(y/x)
 
         if (x < 0):
             if (y != 0):
@@ -243,24 +242,37 @@ class EisensteinInt:
     def plot_multiples(self, n=2):
         UNITS = [EisensteinInt(1, 0), EisensteinInt(1, 1), EisensteinInt(0, 1), EisensteinInt(-1, 0), EisensteinInt(-1, -1), EisensteinInt(0, -1)]
 
-        for i in range(1, n+1):
-            multiples = list(map(lambda x: self * x * i, UNITS))
-            for multiple in multiples:
-                length, angle = multiple.get_full_polar_form()
+        multiples = UNITS
+        for i in range(1, n):
+            multiples = self.find_multiples(multiples, UNITS)
 
-                r = multiple.real
-                i = multiple.imaginary
+        for multiple in multiples:
+            length, angle = multiple.polar_form()
 
-                plt.polar(angle, length, 'ro')
-                plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
+            r = multiple.real
+            i = multiple.imaginary
+
+            plt.polar(angle, length, 'ro')
+            plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
 
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
-        # plt.rgrids(np.arange(0,(length * (n)),length), labels=[])
+        plt.rgrids(np.arange(0,(length * (n)),length), labels=[])
 
         plt.show()
 
+    def find_multiples(self, multiples, units):
+        rv = set()
+        for i in multiples:
+            for j in units:
+                val = i + j
+                if (val != EisensteinInt(0, 0)):
+                    rv.add(val)
 
-a = EisensteinInt(1,-2)
+        return rv
+
+    # def plot_multiples_helper(self, multiples, n):
+
+a = EisensteinInt(1,0)
 a.plot_multiples()
 
 # Sources
