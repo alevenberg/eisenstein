@@ -1,7 +1,6 @@
 from sympy import isprime
 
 class EisensteinInt:
-
     """
     Stores the Eisenstein integer in the form a + bω
     Create Eisenstein Integer by:
