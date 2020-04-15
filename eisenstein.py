@@ -239,7 +239,7 @@ class EisensteinInt:
 
         return (r, angle)
 
-    def plot_multiples(self, n=2):
+    def plot_multiples(self, n=2, labels=True):
         UNITS = [EisensteinInt(1, 0), EisensteinInt(1, 1), EisensteinInt(0, 1), EisensteinInt(-1, 0), EisensteinInt(-1, -1), EisensteinInt(0, -1)]
 
         multiples = UNITS
@@ -252,11 +252,13 @@ class EisensteinInt:
             r = multiple.real
             i = multiple.imaginary
 
-            plt.polar(angle, length, 'ro')
-            plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
+            plt.polar(angle, length, 'bo')
+            if (labels):
+                plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
 
+        r = abs(self)
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
-        plt.rgrids(np.arange(0,(length * (n)),length), labels=[])
+        plt.rgrids(np.arange(0,length,r), labels=[])
 
         plt.show()
 
@@ -273,7 +275,7 @@ class EisensteinInt:
     # def plot_multiples_helper(self, multiples, n):
 
 a = EisensteinInt(1,0)
-a.plot_multiples()
+a.plot_multiples(n=4, labels=False)
 
 # Sources
 # http://math.bu.edu/people/jsweinst/Teaching/MA341Spring18/MA341Notes.pdf
