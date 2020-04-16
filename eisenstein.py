@@ -106,22 +106,12 @@ class EisensteinInt:
         candidate_real = nr // denominator
         candidate_imaginary = ni // denominator
 
-        # print("Denominator:", denominator)
-        # print("Before - QR:", quotient_real, "\tQI:", quotient_imaginary)
-        #
-        # # Offset flooring with a negative
-        # print("nr / denominator", nr / denominator)
-        # print("ni / denominator", ni / denominator)
-        # print("(quotient_real+1)*denominator-nr", (quotient_real+1)*denominator-nr)
-        # print("nr-quotient_real*denominator",nr-quotient_real*denominator)
-        # if (quotient_real+1)*denominator-nr < nr-quotient_real*denominator:
-        #     candidate_real + 1
-        # if (quotient_imaginary+1)*denominator-ni < ni-quotient_imaginary*denominator:
-        # # if ni < 0 and denominator > 0:
-        #     quotient_imaginary += 1
-        # print("After - QR:", quotient_real, "\tQI:", quotient_imaginary)
+        if (quotient_real+1)*denominator-nr < nr-quotient_real*denominator:
+            candidate_real += 1
+        if (quotient_imaginary+1)*denominator-ni < ni-quotient_imaginary*denominator:
+            candidate_imaginary += 1
 
-        # quotient = EisensteinInt(quotient_real, quotient_imaginary)
+        quotient = EisensteinInt(candidate_real, candidate_imaginary)
 
         return quotient
 
