@@ -106,9 +106,9 @@ class EisensteinInt:
         candidate_real = nr // denominator
         candidate_imaginary = ni // denominator
 
-        if (quotient_real+1)*denominator-nr < nr-quotient_real*denominator:
+        if (candidate_real+1)*denominator-nr < nr-candidate_real*denominator:
             candidate_real += 1
-        if (quotient_imaginary+1)*denominator-ni < ni-quotient_imaginary*denominator:
+        if (candidate_imaginary+1)*denominator-ni < ni-candidate_imaginary*denominator:
             candidate_imaginary += 1
 
         quotient = EisensteinInt(candidate_real, candidate_imaginary)
