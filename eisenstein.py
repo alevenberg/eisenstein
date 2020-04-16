@@ -107,9 +107,9 @@ class EisensteinInt:
         quotient_imaginary = ni // denominator
 
         # Offset flooring with a negative
-        if (nr <0):
+        if (nr <0 and quotient_real != (nr / denominator)):
             quotient_real += 1
-        if (ni <0):
+        if (ni <0 and quotient_imaginary != (ni / denominator)):
             quotient_imaginary += 1
 
         quotient = EisensteinInt(quotient_real, quotient_imaginary)

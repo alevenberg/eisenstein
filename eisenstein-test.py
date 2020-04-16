@@ -134,20 +134,17 @@ class EisensteinIntTest(unittest.TestCase):
         self.assertEqual(a // b, EisensteinInt(2,0))
 
         # TODO: fix for negatives
-        # a=EisensteinInt(20,0)
-        # b=EisensteinInt(-10,0)
-        # print(a//b)
-        # self.assertEqual(a // b , EisensteinInt(-2,0))
+        a=EisensteinInt(20,0)
+        b=EisensteinInt(-10,0)
+        self.assertEqual(a // b , EisensteinInt(-2,0))
 
-        # a=EisensteinInt(-20,0)
-        # b=EisensteinInt(-10,0)
-        # print(a//b)
-        # self.assertEqual(a // b , EisensteinInt(2,0))
+        a=EisensteinInt(-20,0)
+        b=EisensteinInt(-10,0)
+        self.assertEqual(a // b , EisensteinInt(2,0))
 
-        # a=EisensteinInt(-20,0)
-        # b=EisensteinInt(10,0)
-        # print(a//b)
-        # self.assertEqual(a // b , EisensteinInt(-2,0))
+        a=EisensteinInt(-20,0)
+        b=EisensteinInt(10,0)
+        self.assertEqual(a // b , EisensteinInt(-2,0))
 
     def test_floor_div(self):
         a=EisensteinInt(8,0)
