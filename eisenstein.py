@@ -1,4 +1,4 @@
-from sympy import isprime
+from sympy import isprime, primefactors, factorint, solve, symbols, Symbol, Eq
 from math import sqrt, pi, sin, cos, atan
 import matplotlib.pyplot as plt
 import numpy as np
@@ -61,7 +61,7 @@ class EisensteinInt:
         result = "{r} + {i}ω".format(r=str(a), i=str(b))
         return result
 
-    def __debug_str(self):
+    def debug_str(self):
         result = "EisensteinInt({}, {})".format(self.real, self.imaginary)
         return result
 
@@ -105,6 +105,13 @@ class EisensteinInt:
 
         quotient_real = nr // denominator
         quotient_imaginary = ni // denominator
+
+        # Offset flooring with a negative
+        if (nr <0):
+            quotient_real += 1
+        if (ni <0):
+            quotient_imaginary += 1
+
         quotient = EisensteinInt(quotient_real, quotient_imaginary)
 
         return quotient
@@ -378,9 +385,43 @@ class EisensteinInt:
                 eis.add(ei)
         return eis
 
+    def divide_by_prime(self, prime):
+        conjugate = prime.conjugate()
+
     # def factor():
 
-    # def factors():
+#     def factors(self):
+#         if(self.is_prime()):
+#             return [self]
+#
+#         norm = self.norm()
+#
+#         norm_factors = primefactors(norm)
+#         for i in norm_factors:
+#             print(i)
+#         return []
+#
+#     def divide_by_three(self):
+#
+    # def generate_random_prime():
+# a = EisensteinInt(5)
+# b = EisensteinInt(13)
+# c = EisensteinInt(1, -1) * EisensteinInt(3, 2)
+# f = a.factors()
+#
+# # for i in f:
+# #     print(i.debug_str())
+# #
+# # f = b.factors()
+# # for i in f:
+# #     print(i.debug_str())
+#
+# x = symbols('x')
+# y = symbols('y')
+# p =3
+# expr = x**2 - x*y + y** 2
+# eq = Eq(expr, p);
+# print(solve(eq,x, y, dict=True))
 
 # Sources
 # http://math.bu.edu/people/jsweinst/Teaching/MA341Spring18/MA341Notes.pdf
