@@ -2,7 +2,7 @@ from sympy import isprime, primefactors, factorint, solve, symbols, Symbol, Eq
 from math import sqrt, pi, sin, cos, atan
 import matplotlib.pyplot as plt
 import numpy as np
-
+import mpmath
 class EisensteinInt:
     """
     Stores the Eisenstein integer in the form a + bω
@@ -103,16 +103,25 @@ class EisensteinInt:
         nr = numerator.real
         ni = numerator.imaginary
 
-        quotient_real = nr // denominator
-        quotient_imaginary = ni // denominator
+        candidate_real = nr // denominator
+        candidate_imaginary = ni // denominator
 
-        # Offset flooring with a negative
-        if (nr <0 and quotient_real != (nr / denominator)):
-            quotient_real += 1
-        if (ni <0 and quotient_imaginary != (ni / denominator)):
-            quotient_imaginary += 1
+        # print("Denominator:", denominator)
+        # print("Before - QR:", quotient_real, "\tQI:", quotient_imaginary)
+        #
+        # # Offset flooring with a negative
+        # print("nr / denominator", nr / denominator)
+        # print("ni / denominator", ni / denominator)
+        # print("(quotient_real+1)*denominator-nr", (quotient_real+1)*denominator-nr)
+        # print("nr-quotient_real*denominator",nr-quotient_real*denominator)
+        # if (quotient_real+1)*denominator-nr < nr-quotient_real*denominator:
+        #     candidate_real + 1
+        # if (quotient_imaginary+1)*denominator-ni < ni-quotient_imaginary*denominator:
+        # # if ni < 0 and denominator > 0:
+        #     quotient_imaginary += 1
+        # print("After - QR:", quotient_real, "\tQI:", quotient_imaginary)
 
-        quotient = EisensteinInt(quotient_real, quotient_imaginary)
+        # quotient = EisensteinInt(quotient_real, quotient_imaginary)
 
         return quotient
 
@@ -153,6 +162,16 @@ class EisensteinInt:
         units = EisensteinInt.units()
         associates = list(map(lambda x: x * self, units))
         return associates
+
+    @staticmethod
+    def eisenstein_form(c):
+        r = c.real
+        i = c.imag
+
+        ie = 2* i / sqrt(3)
+        re = r + ((1/2) * ie)
+
+        return EisensteinInt(int(re), int(ie))
 
     def complex_form(self):
         r = self.real
@@ -364,9 +383,9 @@ class EisensteinInt:
         return plt
 
     @staticmethod
-    def plot_all(n=4, prime=False):
+    def plot_all(n=4, prime=False, labels=False):
         ei = EisensteinInt.generate_eisenstein_ints(n)
-        EisensteinInt.plot_list(ei, prime)
+        EisensteinInt.plot_list(ei, prime, labels)
 
     @staticmethod
     def generate_eisenstein_ints(n):
