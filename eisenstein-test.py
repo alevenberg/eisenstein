@@ -56,6 +56,12 @@ class EisensteinIntTest(unittest.TestCase):
         self.assertEqual(EisensteinInt(-2,-2).norm(), 4)
         self.assertEqual(EisensteinInt(1,-1).norm(), 3)
 
+    def test_norm_multiplicative(self):
+        # Norm(a)*Norm(b)=Norm(a*b)
+        a = EisensteinInt(-2,4)
+        b = EisensteinInt(1,3)
+        self.assertEqual((a * b).norm(), a.norm() *b.norm())
+
     def test_norm_and_conjugate(self):
         # a * a.conjugate = norm(a)
         a = EisensteinInt(3,1)

@@ -22,6 +22,7 @@ class EisensteinInt:
          a.norm() - Returns an integer representing the norm.
          a.polar_form() - Returns a tuple of the radius and angle.
          EisensteinInt.units() - Returns a list of the 6 Eisenstein units
+         a.debug_str() - Returns a simple debug string to describe the object
 
          a.is_even() - Returns whether or not n is even.
          a.is_prime() - Returns whether or not n is a prime.
@@ -124,6 +125,7 @@ class EisensteinInt:
 
         q = EisensteinInt(quotient_r, quotient_i)
         r = a - (q*b)
+        
         return q,r
 
         # numerator = a * b.conjugate()
@@ -487,43 +489,6 @@ class EisensteinInt:
                 eis.add(ei)
         return eis
 
-    def divide_by_prime(self, prime):
-        conjugate = prime.conjugate()
-
-    # def factor():
-
-#     def factors(self):
-#         if(self.is_prime()):
-#             return [self]
-#
-#         norm = self.norm()
-#
-#         norm_factors = primefactors(norm)
-#         for i in norm_factors:
-#             print(i)
-#         return []
-#
-#     def divide_by_three(self):
-#
-    # def generate_random_prime():
-# a = EisensteinInt(5)
-# b = EisensteinInt(13)
-# c = EisensteinInt(1, -1) * EisensteinInt(3, 2)
-# f = a.factors()
-#
-# # for i in f:
-# #     print(i.debug_str())
-# #
-# # f = b.factors()
-# # for i in f:
-# #     print(i.debug_str())
-#
-# x = symbols('x')
-# y = symbols('y')
-# p =3
-# expr = x**2 - x*y + y** 2
-# eq = Eq(expr, p);
-# print(solve(eq,x, y, dict=True))
 
 # Sources
 # http://math.bu.edu/people/jsweinst/Teaching/MA341Spring18/MA341Notes.pdf
