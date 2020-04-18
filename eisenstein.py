@@ -132,50 +132,11 @@ class EisensteinInt:
 
         q = EisensteinInt(qr, qi)
         r = a - (q*b)
-        # nr
-        # a = self
-        #
-        # b = other
-        # c = other.real
-        # d = other.imaginary
-        #
-        # numerator = a * (c+d) * (b.conjugate())
-        # denominator = c*c*c + d*d*d
-        #
-        # nr = numerator.real
-        # ni = numerator.imaginary
-        #
-        # quotient_r = nr // denominator
-        # quotient_i = ni // denominator
-        #
-        # q = EisensteinInt(quotient_r, quotient_i)
-        # r = a - (q*b)
 
-        return q,r
-
-        # numerator = a * b.conjugate()
-        # #
-        # denominator = b.norm() # same as b * b.conjugate()
-        #
-        #
-        #
-        # c = nr / denominator
-        # d = ni / denominator
-        #
-        # r = nr // denominator
-        # s = ni // denominator
-        #
-        # if (c-r <= .5 or r-c <= .5):
-        #     r = r + 1
-        # if (d-s <= .5 or s-d <= .5):
-        #     s = s + 1
-        #
-        # q = EisensteinInt(r, s)
-        # remainder = a - (q*b)
-
-        # if(b.norm() < remainder.norm()):
 
         assert(b.norm() < remainder.norm())
+        return q,r
+
 
         return q,remainder
         # candidates = []
