@@ -109,23 +109,48 @@ class EisensteinInt:
         assert(other != EisensteinInt())
 
         a = self
-
         b = other
-        c = other.real
-        d = other.imaginary
 
-        numerator = a * (c+d) * (b.conjugate())
-        denominator = c*c*c + d*d*d
+        numerator = a * (b.conjugate())
+        denominator = b.norm()
 
         nr = numerator.real
         ni = numerator.imaginary
 
-        quotient_r = nr // denominator
-        quotient_i = ni // denominator
+        sign = np.sign([nr,ni])
+        sign_nr = sign[0]
+        sign_ni = sign[1]
 
-        q = EisensteinInt(quotient_r, quotient_i)
+        # print(sign)
+        qr = (nr + sign_nr * denominator // 2) // denominator
+        qi = (ni + sign_ni * denominator // 2) // denominator
+        # print(qr, qi)
+        qr = int(qr)
+        qi = int(qi)
+        # qr = nr // denominator
+        # qi = ni // denominator
+
+        q = EisensteinInt(qr, qi)
         r = a - (q*b)
-        
+        # nr
+        # a = self
+        #
+        # b = other
+        # c = other.real
+        # d = other.imaginary
+        #
+        # numerator = a * (c+d) * (b.conjugate())
+        # denominator = c*c*c + d*d*d
+        #
+        # nr = numerator.real
+        # ni = numerator.imaginary
+        #
+        # quotient_r = nr // denominator
+        # quotient_i = ni // denominator
+        #
+        # q = EisensteinInt(quotient_r, quotient_i)
+        # r = a - (q*b)
+
         return q,r
 
         # numerator = a * b.conjugate()
@@ -210,6 +235,18 @@ class EisensteinInt:
 
         return quotient
 
+    def __lt__(self, other):
+        if isinstance(other, int):
+            other = EisensteinInt(other)
+
+        return self.norm() < other.norm()
+
+    def __gt__(self, other):
+        if isinstance(other, int):
+            other = EisensteinInt(other)
+
+        return self.norm() > other.norm()
+
     def __mod__(self, other):
         q, r = divmod(self, other)
         return r
@@ -247,6 +284,22 @@ class EisensteinInt:
         units = EisensteinInt.units()
         associates = list(map(lambda x: x * self, units))
         return associates
+
+    def signum(self):
+        if (a == 0 and b==0):
+            return (self, EisensteinInt(0))
+        elif (a > b and b >=0):
+            return (self, EisensteinInt(1))
+        elif (b >= a and a>0):
+            return (self * EisensteinInt(0,-1), EisensteinInt(1,1))
+        elif (b > 0 and 0>=a):
+            return (EisensteinInt(-1,-1) * self, EisensteinInt(0,1))
+        elif (a < b and b<=0):
+            return (self * EisensteinInt(-1,0), EisensteinInt(-1))
+        elif (b <= a and a<0):
+            return (self * EisensteinInt(0,1), EisensteinInt(-1,-1))
+        else:
+            return (self * EisensteinInt(1,1), EisensteinInt(0,-1))
 
     @staticmethod
     def eisenstein_form(c):

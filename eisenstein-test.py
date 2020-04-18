@@ -135,6 +135,17 @@ class EisensteinIntTest(unittest.TestCase):
         self.assertTrue(EisensteinInt(1,-1).is_prime())
         self.assertTrue(EisensteinInt(1,-1).conjugate().is_prime())
 
+    def test_gt_and_lt(self):
+        a = EisensteinInt(2,0)
+        b = EisensteinInt(1,0)
+        self.assertTrue(a > b)
+        self.assertTrue(b < a)
+
+        a = EisensteinInt(-3,-4)
+        b = EisensteinInt(1,-1)
+        self.assertTrue(a > b)
+        self.assertTrue(b < a)
+
     # def test_gcd_ints(self):
     #     a=EisensteinInt(12,0)
     #     b=EisensteinInt(6,0)
@@ -183,8 +194,6 @@ class EisensteinIntTest(unittest.TestCase):
     #     b=EisensteinInt(10,0)
     #     self.assertEqual(a // b , EisensteinInt(-2,0))
 
-
-
     # def test_floor_div(self):
     #     a=EisensteinInt(8,0)
     #     b=EisensteinInt(3,1)
@@ -198,6 +207,7 @@ class EisensteinIntTest(unittest.TestCase):
     #     d=(a*b)+r1
     #
     #     q,r2 = divmod(d, a)
+    #     print(q,b)
     #     self.assertTrue(r1 == r2)
     #     self.assertTrue(q == b)
     #
