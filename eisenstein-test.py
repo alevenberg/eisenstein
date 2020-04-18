@@ -117,13 +117,10 @@ class EisensteinIntTest(unittest.TestCase):
         c = a.complex_form()
         e = EisensteinInt.eisenstein_form(c)
         self.assertEqual(a,e)
-        print(a,e)
 
         a = EisensteinInt(-2,3)
         c = a.complex_form()
-        print(a,e)
         e = EisensteinInt.eisenstein_form(c)
-        print(a,e)
         self.assertEqual(a,e)
 
         a = EisensteinInt(2,-5)
