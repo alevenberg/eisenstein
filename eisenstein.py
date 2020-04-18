@@ -70,19 +70,14 @@ class EisensteinInt:
         if (abs(b) == 1):
             b_ = "ω"
         else:
-            b_ = "{}ω".format(str(abs(b))).strip()
+            b_ = "{}ω".format(str(abs(b)))
 
         if a == 0:
-            result = "{} {}".format(s, b_).strip()
+            result = "{} {}".format(s, b_)
         else:
-            result = "{} {} {}".format(str(a), op, b_).strip()
+            result = "{} {} {}".format(str(a), op, b_)
 
-        # else:
-        #     if b > 0:
-        #     else:
-        #     if b
-        #     result = "{r} + {i}ω".format(r=str(a), i=str(b))
-        return result
+        return result.strip()
 
     def debug_str(self):
         result = "EisensteinInt({}, {})".format(self.real, self.imaginary)
