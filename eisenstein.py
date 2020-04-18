@@ -254,7 +254,7 @@ class EisensteinInt:
         ie = 2* i / sqrt(3)
         re = r + ((1/2) * ie)
 
-        return EisensteinInt(int(re), int(ie))
+        return EisensteinInt(round(re), round(ie))
 
     def complex_form(self):
         r = self.real
