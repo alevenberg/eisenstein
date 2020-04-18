@@ -84,34 +84,91 @@ class EisensteinInt:
 
     def __divmod__(self, other):
 
-        divisor = other
+        if isinstance(other, int):
+            other = EisensteinInt(other)
 
-        quotient = self//divisor
-        p = other*quotient
-        remainder = self - p
+        a = self
+        b = other
 
-        return quotient, remainder
+        numerator = a * b.conjugate()
+        denominator = b.norm() # same as b * b.conjugate()
+
+        nr = numerator.real
+        ni = numerator.imaginary
+
+        c = nr / denominator
+        d = ni / denominator
+
+        r = nr // denominator
+        s = ni // denominator
+
+        if (c-r <= .5 or r-c <= .5):
+            r = r + 1
+        if (d-s <= .5 or s-d <= .5):
+            s = s + 1
+
+        q = EisensteinInt(r, s)
+        remainder = a - (q*b)
+
+        # if(b.norm() < remainder.norm()):
+
+        # assert(b.norm() < remainder.norm())
+
+        return q,remainder
+        # candidates = []
+        # q = EisensteinInt(candidate_real, candidate_imaginary)
+        # r = a - (q*b)
+        # candidates.append((q,r))
+        #
+        # q = EisensteinInt(candidate_real + 1, candidate_imaginary)
+        # r = a - (q*b)
+        # candidates.append((q,r))
+        #
+        # q = EisensteinInt(candidate_real, candidate_imaginary + 1)
+        # r = a - (q*b)
+        # candidates.append((q,r))
+        #
+        # q = EisensteinInt(candidate_real + 1, candidate_imaginary + 1)
+        # r = a - (q*b)
+        # candidates.append((q,r))
+
+        # return EisensteinInt.best_candidate(candidates)
+
+    @staticmethod
+    def best_candidate(candidates):
+        min_r = float("inf")
+        min_c = ()
+        for c in candidates:
+            c_r = abs(c[1])
+            if c_r < min_r:
+                min_r = c_r
+                min_c = c
+        return c
 
     def __floordiv__(self, other):
 
         if isinstance(other, int):
             other = EisensteinInt(other)
 
-        numerator = (self) * other.conjugate()
-        denominator = other.norm()
+        # divisor = other
+        #
+        # numerator = (self) * divisor.conjugate()
+        # denominator = divisor.norm()
+        #
+        # nr = numerator.real
+        # ni = numerator.imaginary
+        #
+        # candidate_real = nr // denominator
+        # candidate_imaginary = ni // denominator
 
-        nr = numerator.real
-        ni = numerator.imaginary
+        # a_r =
+        # b_r =
+        # if (candidate_real+1)*denominator-nr < nr-candidate_real*denominator:
+        #     candidate_real += 1
+        # if (candidate_imaginary+1)*denominator-ni < ni-candidate_imaginary*denominator:
+        #     candidate_imaginary += 1
 
-        candidate_real = nr // denominator
-        candidate_imaginary = ni // denominator
-
-        if (candidate_real+1)*denominator-nr < nr-candidate_real*denominator:
-            candidate_real += 1
-        if (candidate_imaginary+1)*denominator-ni < ni-candidate_imaginary*denominator:
-            candidate_imaginary += 1
-
-        quotient = EisensteinInt(candidate_real, candidate_imaginary)
+        quotient, _ = divmod(self, other)
 
         return quotient
 
@@ -442,3 +499,4 @@ class EisensteinInt:
 # https://thekeep.eiu.edu/cgi/viewcontent.cgi?article=3459&context=theses
 # https://mathworld.wolfram.com/EisensteinPrime.html
 # https://stackoverflow.com/questions/28417604/plotting-a-line-from-a-coordinate-with-and-angle
+#https://pdfs.semanticscholar.org/f871/a066a9a75bcf3435bc1c5960bd6e6d53502a.pdf

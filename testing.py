@@ -1,8 +1,8 @@
 from eisenstein import EisensteinInt
 
 
-a=EisensteinInt(17,0)
-b=EisensteinInt(9,0)
+a=EisensteinInt(10,0)
+b=EisensteinInt(7,0)
 # self.assertEqual(a // b , EisensteinInt(-2,0))
 
 # a=EisensteinInt(8,0)
