@@ -117,18 +117,18 @@ class EisensteinInt:
         nr = numerator.real
         ni = numerator.imaginary
 
-        sign = np.sign([nr,ni])
-        sign_nr = sign[0]
-        sign_ni = sign[1]
-
-        # print(sign)
-        qr = (nr + sign_nr * denominator // 2) // denominator
-        qi = (ni + sign_ni * denominator // 2) // denominator
-        # print(qr, qi)
-        qr = int(qr)
-        qi = int(qi)
-        # qr = nr // denominator
-        # qi = ni // denominator
+        # sign = np.sign([nr,ni])
+        # sign_nr = sign[0]
+        # sign_ni = sign[1]
+        #
+        # # print(sign)
+        # qr = (nr + sign_nr * denominator // 2) // denominator
+        # qi = (ni + sign_ni * denominator // 2) // denominator
+        # # print(qr, qi)
+        # qr = int(qr)
+        # qi = int(qi)
+        qr = nr // denominator
+        qi = ni // denominator
 
         q = EisensteinInt(qr, qi)
         r = a - (q*b)
