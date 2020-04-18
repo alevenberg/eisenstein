@@ -80,13 +80,17 @@ class EisensteinIntTest(unittest.TestCase):
         self.assertFalse(EisensteinInt(5,8).is_even())
 
     def test_str(self):
-        self.assertEqual(str(EisensteinInt(1,0)), "1 + 0ω")
-        self.assertEqual(str(EisensteinInt(0,0)), "0 + 0ω")
-        self.assertEqual(str(EisensteinInt(1,1)), "1 + 1ω")
-        self.assertEqual(str(EisensteinInt(1,-1)), "1 + -1ω")
-        self.assertEqual(str(EisensteinInt(1,-2)), "1 + -2ω")
-        self.assertEqual(str(EisensteinInt(0, 1)), "0 + 1ω")
+        self.assertEqual(str(EisensteinInt(1,0)), "1")
+        self.assertEqual(str(EisensteinInt(0,0)), "0")
+        self.assertEqual(str(EisensteinInt(1,1)), "1 + ω")
+        self.assertEqual(str(EisensteinInt(1,-1)), "1 - ω")
+        self.assertEqual(str(EisensteinInt(1,-2)), "1 - 2ω")
+        self.assertEqual(str(EisensteinInt(-1,-2)), "-1 - 2ω")
+        self.assertEqual(str(EisensteinInt(-1,2)), "-1 + 2ω")
+        self.assertEqual(str(EisensteinInt(0, 1)), "ω")
         self.assertEqual(str(EisensteinInt(1,2)), "1 + 2ω")
+        self.assertEqual(str(EisensteinInt(2,0)), "2")
+        self.assertEqual(str(EisensteinInt(-2,0)), "-2")
 
     def test_associates(self):
         associates = EisensteinInt(2,1).associates()

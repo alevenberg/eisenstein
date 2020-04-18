@@ -1,8 +1,8 @@
 from eisenstein import EisensteinInt
 
 
-a=EisensteinInt(10,0)
-b=EisensteinInt(7,0)
+a=EisensteinInt(8,0)
+b=EisensteinInt(3,-1)
 # self.assertEqual(a // b , EisensteinInt(-2,0))
 
 # a=EisensteinInt(8,0)
@@ -14,6 +14,16 @@ b=EisensteinInt(7,0)
 
 q,r2 = divmod(a,b)
 print(q,"\t", r2)
+
+print(EisensteinInt(0,0))
+print(EisensteinInt(0,1))
+print(EisensteinInt(1,1))
+print(EisensteinInt(-1,-1))
+print(EisensteinInt(0,-1))
+print(EisensteinInt(1,0))
+print(EisensteinInt(20,23))
+print(EisensteinInt(-3,-1))
+
 # a=EisensteinInt(17,0)
 # b=EisensteinInt(9,0)
 # c=EisensteinInt(1,0)

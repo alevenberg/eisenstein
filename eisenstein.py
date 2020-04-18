@@ -58,7 +58,30 @@ class EisensteinInt:
         a = self.real
         b = self.imaginary
 
-        result = "{r} + {i}ω".format(r=str(a), i=str(b))
+        if b == 0:
+            return str(a)
+        elif (b > 0):
+            s = ""
+            op = "+"
+        else:
+            s = "-"
+            op = "-"
+
+        if (abs(b) == 1):
+            b_ = "ω"
+        else:
+            b_ = "{}ω".format(str(abs(b))).strip()
+
+        if a == 0:
+            result = "{} {}".format(s, b_).strip()
+        else:
+            result = "{} {} {}".format(str(a), op, b_).strip()
+
+        # else:
+        #     if b > 0:
+        #     else:
+        #     if b
+        #     result = "{r} + {i}ω".format(r=str(a), i=str(b))
         return result
 
     def debug_str(self):
@@ -87,32 +110,50 @@ class EisensteinInt:
         if isinstance(other, int):
             other = EisensteinInt(other)
 
-        a = self
-        b = other
+        assert(other != EisensteinInt())
 
-        numerator = a * b.conjugate()
-        denominator = b.norm() # same as b * b.conjugate()
+        a = self
+
+        b = other
+        c = other.real
+        d = other.imaginary
+
+        numerator = a * (c+d) * (b.conjugate())
+        denominator = c*c*c + d*d*d
 
         nr = numerator.real
         ni = numerator.imaginary
 
-        c = nr / denominator
-        d = ni / denominator
+        quotient_r = nr // denominator
+        quotient_i = ni // denominator
 
-        r = nr // denominator
-        s = ni // denominator
+        q = EisensteinInt(quotient_r, quotient_i)
+        r = a - (q*b)
+        return q,r
 
-        if (c-r <= .5 or r-c <= .5):
-            r = r + 1
-        if (d-s <= .5 or s-d <= .5):
-            s = s + 1
-
-        q = EisensteinInt(r, s)
-        remainder = a - (q*b)
+        # numerator = a * b.conjugate()
+        # #
+        # denominator = b.norm() # same as b * b.conjugate()
+        #
+        #
+        #
+        # c = nr / denominator
+        # d = ni / denominator
+        #
+        # r = nr // denominator
+        # s = ni // denominator
+        #
+        # if (c-r <= .5 or r-c <= .5):
+        #     r = r + 1
+        # if (d-s <= .5 or s-d <= .5):
+        #     s = s + 1
+        #
+        # q = EisensteinInt(r, s)
+        # remainder = a - (q*b)
 
         # if(b.norm() < remainder.norm()):
 
-        # assert(b.norm() < remainder.norm())
+        assert(b.norm() < remainder.norm())
 
         return q,remainder
         # candidates = []
@@ -500,3 +541,4 @@ class EisensteinInt:
 # https://mathworld.wolfram.com/EisensteinPrime.html
 # https://stackoverflow.com/questions/28417604/plotting-a-line-from-a-coordinate-with-and-angle
 #https://pdfs.semanticscholar.org/f871/a066a9a75bcf3435bc1c5960bd6e6d53502a.pdf
+# https://en.wiktionary.org/wiki/Eisenstein_integer#English
