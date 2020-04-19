@@ -169,35 +169,35 @@ class EisensteinIntTest(unittest.TestCase):
         a=EisensteinInt(-5,1)
         self.assertEqual(a // a, EisensteinInt(1))
 
-    def test_floor_div_ints(self):
-        a=EisensteinInt(10,0)
-        b=EisensteinInt(7,0)
-        self.assertEqual(a // b , EisensteinInt(1,0))
+    # def test_floor_div_ints(self):
+    #     a=EisensteinInt(10,0)
+    #     b=EisensteinInt(7,0)
+    #     self.assertEqual(a // b , EisensteinInt(1,0))
+    #
+    #     a=EisensteinInt(17,0)
+    #     b=EisensteinInt(9,0)
+    #     self.assertEqual(a // b , EisensteinInt(1,0))
+    #
+    #     a=EisensteinInt(10,0)
+    #     b=EisensteinInt(5,0)
+    #     self.assertEqual(a // b, EisensteinInt(2,0))
+    #
+    #     a=EisensteinInt(20,0)
+    #     b=EisensteinInt(-10,0)
+    #     self.assertEqual(a // b , EisensteinInt(-2,0))
+    #
+    #     a=EisensteinInt(-20,0)
+    #     b=EisensteinInt(-10,0)
+    #     self.assertEqual(a // b , EisensteinInt(2,0))
+    #
+    #     a=EisensteinInt(-20,0)
+    #     b=EisensteinInt(10,0)
+    #     self.assertEqual(a // b , EisensteinInt(-2,0))
 
-        a=EisensteinInt(17,0)
-        b=EisensteinInt(9,0)
-        self.assertEqual(a // b , EisensteinInt(1,0))
-
-        a=EisensteinInt(10,0)
-        b=EisensteinInt(5,0)
-        self.assertEqual(a // b, EisensteinInt(2,0))
-
-        a=EisensteinInt(20,0)
-        b=EisensteinInt(-10,0)
-        self.assertEqual(a // b , EisensteinInt(-2,0))
-
-        a=EisensteinInt(-20,0)
-        b=EisensteinInt(-10,0)
-        self.assertEqual(a // b , EisensteinInt(2,0))
-
-        a=EisensteinInt(-20,0)
-        b=EisensteinInt(10,0)
-        self.assertEqual(a // b , EisensteinInt(-2,0))
-
-    # def test_floor_div(self):
-    #     a=EisensteinInt(8,0)
-    #     b=EisensteinInt(3,1)
-    #     self.assertEqual(a // b , EisensteinInt(2,-1))
+    def test_floor_div(self):
+        a=EisensteinInt(8,0)
+        b=EisensteinInt(3,1)
+        self.assertEqual(a // b , EisensteinInt(2,-1))
 
 
     def test_divmod(self):
@@ -207,7 +207,6 @@ class EisensteinIntTest(unittest.TestCase):
         d=(a*b)+r1
 
         q,r2 = divmod(d, a)
-        print(q,b)
         self.assertTrue(q == b)
         self.assertTrue(r1 == r2)
 

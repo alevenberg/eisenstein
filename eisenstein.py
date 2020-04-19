@@ -117,46 +117,83 @@ class EisensteinInt:
         nr = numerator.real
         ni = numerator.imaginary
 
-        # sign = np.sign([nr,ni])
-        # sign_nr = sign[0]
-        # sign_ni = sign[1]
-        #
-        # # print(sign)
-        # qr = (nr + sign_nr * denominator // 2) // denominator
-        # qi = (ni + sign_ni * denominator // 2) // denominator
-        # # print(qr, qi)
-        # qr = int(qr)
-        # qi = int(qi)
         qr = nr // denominator
         qi = ni // denominator
 
+        if (2*qr+1)*denominator < 2*nr:
+            qr += 1
+
+        if (2*qi+1)*denominator < 2*ni:
+            qi += 1
+
         q = EisensteinInt(qr, qi)
         r = a - (q*b)
-
-
-        assert(b.norm() < remainder.norm())
+        # candidates.append((q,r))
+        #
+        # q = EisensteinInt(qr + 1, qi)
+        # r = a - (q*b)
+        # candidates.append((q,r))
+        #
+        # q = EisensteinInt(qr, qi + 1)
+        # r = a - (q*b)
+        # candidates.append((q,r))
+        #
+        # q = EisensteinInt(qr + 1, qi + 1)
+        # r = a - (q*b)
+        # candidates.append((q,r))
+        #
+        # pruned_c = []
+        # print(nr / denominator)
+        # print(ni / denominator)
+        # for c in candidates:
+        #     q, r = c
+        #     print(q.real, "\t", q.imaginary)
+        #     print("Opts:", q,r)
+        #     # print(b.norm(), r.norm())
+        #     # print("pruned", b >= r)
+        #
+        #     if (b >= r and r.is_positive()):
+        #         print("****", q,r)
+        #         # return q,r
+        #         pruned_c.append(c)
+        #
+        # # print(len(pruned_c))
+        #
+        #
+        # best_c = candidates[0]
+        # if len(pruned_c) == 1:
+        #     return pruned_c[0][0], pruned_c[0][1]
+        #
+        # # print("PRUNED", pruned_c)
+        # if len(pruned_c) == 2:
+        #     best_c = pruned_c[1]
+        #
+        # q, r = best_c
         return q,r
 
-
-        return q,remainder
-        # candidates = []
-        # q = EisensteinInt(candidate_real, candidate_imaginary)
-        # r = a - (q*b)
-        # candidates.append((q,r))
-        #
-        # q = EisensteinInt(candidate_real + 1, candidate_imaginary)
-        # r = a - (q*b)
-        # candidates.append((q,r))
-        #
-        # q = EisensteinInt(candidate_real, candidate_imaginary + 1)
-        # r = a - (q*b)
-        # candidates.append((q,r))
-        #
-        # q = EisensteinInt(candidate_real + 1, candidate_imaginary + 1)
-        # r = a - (q*b)
-        # candidates.append((q,r))
-
         # return EisensteinInt.best_candidate(candidates)
+    def is_positive(self):
+        s = self.signum()
+
+        #
+        # s[0] = 0;
+        # if (a == 0 and b==0):
+        #     return (self, EisensteinInt(0))
+        # elif (a > b and b >=0):
+        #     return (self, EisensteinInt(1))
+        # elif (b >= a and a>0):
+        #     return (self * EisensteinInt(0,-1), EisensteinInt(1,1))
+        # elif (b > 0 and 0>=a):
+        #     return (EisensteinInt(-1,-1) * self, EisensteinInt(0,1))
+        # elif (a < b and b<=0):
+        #     return (self * EisensteinInt(-1,0), EisensteinInt(-1))
+        # elif (b <= a and a<0):
+        #     return (self * EisensteinInt(0,1), EisensteinInt(-1,-1))
+        # else:
+        #     return (self * EisensteinInt(1,1), EisensteinInt(0,-1))
+        print("sign",s[1])
+        return True
+
 
     @staticmethod
     def best_candidate(candidates):
@@ -201,6 +238,12 @@ class EisensteinInt:
             other = EisensteinInt(other)
 
         return self.norm() < other.norm()
+
+    def __le__(self, other):
+        return self < other or self == other
+
+    def __ge__(self, other):
+        return self > other or self == other
 
     def __gt__(self, other):
         if isinstance(other, int):
@@ -247,20 +290,22 @@ class EisensteinInt:
         return associates
 
     def signum(self):
+        a = self.real
+        b = self.imaginary
         if (a == 0 and b==0):
-            return (self, EisensteinInt(0))
+            return (self, EisensteinInt(0)) # origin
         elif (a > b and b >=0):
-            return (self, EisensteinInt(1))
+            return (self, EisensteinInt(1)) # first
         elif (b >= a and a>0):
-            return (self * EisensteinInt(0,-1), EisensteinInt(1,1))
+            return (self * EisensteinInt(0,-1), EisensteinInt(1,1)) # second
         elif (b > 0 and 0>=a):
-            return (EisensteinInt(-1,-1) * self, EisensteinInt(0,1))
+            return (EisensteinInt(-1,-1) * self, EisensteinInt(0,1)) # third
         elif (a < b and b<=0):
-            return (self * EisensteinInt(-1,0), EisensteinInt(-1))
+            return (self * EisensteinInt(-1,0), EisensteinInt(-1)) # fourth
         elif (b <= a and a<0):
-            return (self * EisensteinInt(0,1), EisensteinInt(-1,-1))
+            return (self * EisensteinInt(0,1), EisensteinInt(-1,-1)) # fifth
         else:
-            return (self * EisensteinInt(1,1), EisensteinInt(0,-1))
+            return (self * EisensteinInt(1,1), EisensteinInt(0,-1)) # sixth
 
     @staticmethod
     def eisenstein_form(c):
@@ -289,6 +334,15 @@ class EisensteinInt:
         conjugate_real = a-b
         conjugate_imag = -b
         return EisensteinInt(conjugate_real, conjugate_imag)
+
+    def dot_product(self, other):
+        a = self.real
+        b = self.imaginary
+        c = other.real
+        d = other.imaginary
+
+        dot_product = a*c + b*d - (b*c + a*d) /2
+        return dot_product
 
     def norm(self):
         # Norm(a) = a^2 - ab + b^2
