@@ -12,17 +12,22 @@ class EisensteinInt:
 	     a = EisensteinInt(13)  # Create (13 + 0ω)
 
     Functions implemented
-         Basic functions: init(), ==, hash(),  str(),
+         Basic functions: init(), ==, hash(),  str(), <, >, <=, >=
 	     Arithmetic functions: abs(), +, divmod(), //, %, *, -
+
+         a.debug_str() - Returns a simple debug string to describe the object
 
          a.associates() - Returns a list of the product of the number and
             each of the units.
          a.complex_form() - Returns the complex form.
          a.conjugate() - Returns an EisensteinInt representing he conjugate.
+         a.dot_product(b) - Returns the dot product
          a.norm() - Returns an integer representing the norm.
          a.polar_form() - Returns a tuple of the radius and angle.
+
          EisensteinInt.units() - Returns a list of the 6 Eisenstein units
-         a.debug_str() - Returns a simple debug string to describe the object
+         EisensteinInt.eisenstein_form(c) - Returns the EisensteinInt from
+            a complex number
 
          a.is_even() - Returns whether or not n is even.
          a.is_prime() - Returns whether or not n is a prime.
@@ -33,6 +38,7 @@ class EisensteinInt:
          a.plot_multiples(n,labels) - Plots the multipls of the number n
             degrees out and gives the option to include labels.
          a.get_multiples(n) - Returns a list of multiples n degrees away
+
          EisensteinInt.plot_all(n,prime) - Plots all Eisenstein integers
             and can highlight the prime numbers
          EisensteinInt.generate_eisenstein_ints(n) - Generates all EisensteinInt
@@ -102,6 +108,20 @@ class EisensteinInt:
         return EisensteinInt(sum_real, sum_imaginary)
 
     def __divmod__(self, other):
+        if isinstance(other, int):
+            other = EisensteinInt(other)
+
+        assert(other != EisensteinInt())
+
+        a = self
+        b = other
+
+        q = a // b
+        r = a - (q*b)
+
+        return q,r
+
+    def __floordiv__(self, other):
 
         if isinstance(other, int):
             other = EisensteinInt(other)
@@ -127,111 +147,8 @@ class EisensteinInt:
             qi += 1
 
         q = EisensteinInt(qr, qi)
-        r = a - (q*b)
-        # candidates.append((q,r))
-        #
-        # q = EisensteinInt(qr + 1, qi)
-        # r = a - (q*b)
-        # candidates.append((q,r))
-        #
-        # q = EisensteinInt(qr, qi + 1)
-        # r = a - (q*b)
-        # candidates.append((q,r))
-        #
-        # q = EisensteinInt(qr + 1, qi + 1)
-        # r = a - (q*b)
-        # candidates.append((q,r))
-        #
-        # pruned_c = []
-        # print(nr / denominator)
-        # print(ni / denominator)
-        # for c in candidates:
-        #     q, r = c
-        #     print(q.real, "\t", q.imaginary)
-        #     print("Opts:", q,r)
-        #     # print(b.norm(), r.norm())
-        #     # print("pruned", b >= r)
-        #
-        #     if (b >= r and r.is_positive()):
-        #         print("****", q,r)
-        #         # return q,r
-        #         pruned_c.append(c)
-        #
-        # # print(len(pruned_c))
-        #
-        #
-        # best_c = candidates[0]
-        # if len(pruned_c) == 1:
-        #     return pruned_c[0][0], pruned_c[0][1]
-        #
-        # # print("PRUNED", pruned_c)
-        # if len(pruned_c) == 2:
-        #     best_c = pruned_c[1]
-        #
-        # q, r = best_c
-        return q,r
 
-        # return EisensteinInt.best_candidate(candidates)
-    def is_positive(self):
-        s = self.signum()
-
-        #
-        # s[0] = 0;
-        # if (a == 0 and b==0):
-        #     return (self, EisensteinInt(0))
-        # elif (a > b and b >=0):
-        #     return (self, EisensteinInt(1))
-        # elif (b >= a and a>0):
-        #     return (self * EisensteinInt(0,-1), EisensteinInt(1,1))
-        # elif (b > 0 and 0>=a):
-        #     return (EisensteinInt(-1,-1) * self, EisensteinInt(0,1))
-        # elif (a < b and b<=0):
-        #     return (self * EisensteinInt(-1,0), EisensteinInt(-1))
-        # elif (b <= a and a<0):
-        #     return (self * EisensteinInt(0,1), EisensteinInt(-1,-1))
-        # else:
-        #     return (self * EisensteinInt(1,1), EisensteinInt(0,-1))
-        print("sign",s[1])
-        return True
-
-
-    @staticmethod
-    def best_candidate(candidates):
-        min_r = float("inf")
-        min_c = ()
-        for c in candidates:
-            c_r = abs(c[1])
-            if c_r < min_r:
-                min_r = c_r
-                min_c = c
-        return c
-
-    def __floordiv__(self, other):
-
-        if isinstance(other, int):
-            other = EisensteinInt(other)
-
-        # divisor = other
-        #
-        # numerator = (self) * divisor.conjugate()
-        # denominator = divisor.norm()
-        #
-        # nr = numerator.real
-        # ni = numerator.imaginary
-        #
-        # candidate_real = nr // denominator
-        # candidate_imaginary = ni // denominator
-
-        # a_r =
-        # b_r =
-        # if (candidate_real+1)*denominator-nr < nr-candidate_real*denominator:
-        #     candidate_real += 1
-        # if (candidate_imaginary+1)*denominator-ni < ni-candidate_imaginary*denominator:
-        #     candidate_imaginary += 1
-
-        quotient, _ = divmod(self, other)
-
-        return quotient
+        return q
 
     def __lt__(self, other):
         if isinstance(other, int):
@@ -242,14 +159,14 @@ class EisensteinInt:
     def __le__(self, other):
         return self < other or self == other
 
-    def __ge__(self, other):
-        return self > other or self == other
-
     def __gt__(self, other):
         if isinstance(other, int):
             other = EisensteinInt(other)
 
         return self.norm() > other.norm()
+
+    def __ge__(self, other):
+        return self > other or self == other
 
     def __mod__(self, other):
         q, r = divmod(self, other)
@@ -306,16 +223,6 @@ class EisensteinInt:
             return (self * EisensteinInt(0,1), EisensteinInt(-1,-1)) # fifth
         else:
             return (self * EisensteinInt(1,1), EisensteinInt(0,-1)) # sixth
-
-    @staticmethod
-    def eisenstein_form(c):
-        r = c.real
-        i = c.imag
-
-        ie = 2* i / sqrt(3)
-        re = r + ((1/2) * ie)
-
-        return EisensteinInt(round(re), round(ie))
 
     def complex_form(self):
         r = self.real
@@ -377,6 +284,16 @@ class EisensteinInt:
                 angle = np.pi - angle
 
         return (r, angle)
+
+    @staticmethod
+    def eisenstein_form(c):
+        r = c.real
+        i = c.imag
+
+        ie = 2* i / sqrt(3)
+        re = r + ((1/2) * ie)
+
+        return EisensteinInt(round(re), round(ie))
 
     @staticmethod
     def units():
