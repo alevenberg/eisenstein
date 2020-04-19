@@ -146,18 +146,18 @@ class EisensteinIntTest(unittest.TestCase):
         self.assertTrue(a > b)
         self.assertTrue(b < a)
 
-    # def test_gcd_ints(self):
-    #     a=EisensteinInt(12,0)
-    #     b=EisensteinInt(6,0)
-    #     self.assertEqual(a.gcd(b), EisensteinInt(6,0))
-    #
-    #     a=EisensteinInt(20,0)
-    #     b=EisensteinInt(12,0)
-    #     # self.assertEqual(a.gcd(b), EisensteinInt(4,0))
-    #
-    #     a=EisensteinInt(5,0)
-    #     b=EisensteinInt(7,0)
-    #     self.assertEqual(a.gcd(b), EisensteinInt(1,0))
+    def test_gcd_ints(self):
+        a=EisensteinInt(12,0)
+        b=EisensteinInt(6,0)
+        self.assertEqual(a.gcd(b), EisensteinInt(6,0))
+
+        a=EisensteinInt(20,0)
+        b=EisensteinInt(12,0)
+        self.assertEqual(a.gcd(b), EisensteinInt(-4,0))
+
+        a=EisensteinInt(5,0)
+        b=EisensteinInt(7,0)
+        self.assertEqual(a.gcd(b), EisensteinInt(1,0))
 
     def test_floor_div_identity(self):
         a=EisensteinInt(1,-1)
@@ -219,14 +219,20 @@ class EisensteinIntTest(unittest.TestCase):
         self.assertTrue(r1 == r2)
         self.assertTrue(q == b)
 
-        # In progress
+        a=EisensteinInt(-3,21)
+        b=EisensteinInt(-5, -1)
+        r1=EisensteinInt(1,0)
+        d=(a*b)+r1
+
+        q,r2 = divmod(d, a)
+        self.assertTrue(r1 == r2)
+        self.assertTrue(q == b)
+
         a=EisensteinInt(19,2)
         b=EisensteinInt(3, -2)
         r1=EisensteinInt(2,1)
         d=(a*b)+r1
 
-        print(q,b)
-        print(r1,r2)
         q,r2 = divmod(d, a)
         self.assertTrue(q == b)
         self.assertTrue(r1 == r2)
@@ -240,39 +246,29 @@ class EisensteinIntTest(unittest.TestCase):
         self.assertTrue(q == b)
         self.assertTrue(r1 == r2)
 
-        # TODO: fix test case
-        # a=EisensteinInt(-3,21)
-        # b=EisensteinInt(5, -1)
-        # r1=EisensteinInt(1,0)
-        # d=(a*b)+r1
-        #
-        # q,r2 = divmod(d, a)
-        # self.assertTrue(r1 == r2)
-        # self.assertTrue(q == b)
+        a=EisensteinInt(-3,21)
+        b=EisensteinInt(5, -1)
+        r1=EisensteinInt(1,0)
+        d=(a*b)+r1
 
+        q,r2 = divmod(d, a)
+        self.assertTrue(r1 == r2)
+        self.assertTrue(q == b)
 
-    # def test_div_mod(self):
-    #     result = EisensteinInt(13,0) % EisensteinInt(5,0)
-    #     self.assertEqual(result, EisensteinInt(3,0), msg=str(result))
-    #
-    # def test_gcd(self):
+    def test_gcd(self):
+        p=EisensteinInt(1,-1)
+        q=EisensteinInt(2,1)
+        r=EisensteinInt(7,1)
 
-    #     # p=EisensteinInt(1,-1)
-    #     # q=EisensteinInt(3,1)
-    #     # r=EisensteinInt(7,1)
-    #     #
-    #     # a=p*q
-    #     # b=p*r
-    #     # print(a.gcd(b))
-    #     # self.assertEqual(a.gcd(b), p)
-    #
-    # def test_division_using_add_and_mult(self):
-    #     a=EisensteinInt(3,2)
-    #     b=EisensteinInt(5,2)
-    #     c= a*b
-    #     r = EisensteinInt(0, 2)
-    #     c= c +r
-    #     self.assertEqual(divmod(a,b), (b,r), msg=str(divmod(a,b)[1]))
+        assert(p.is_prime())
+        assert(q.is_prime())
+        assert(r.is_prime())
+
+        a=p*q
+        b=p*r
+
+        self.assertEqual(a.gcd(b),p)
+
 
 
 if (__name__ == '__main__'):
