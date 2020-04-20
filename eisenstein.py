@@ -436,7 +436,7 @@ class EisensteinInt:
 
         return a
 
-    def plot_point(self, file_name=""):
+    def plot_point(self, format="", label="", file_name=""):
         max_len = 0
 
         length, angle = self.polar_form()
@@ -447,8 +447,15 @@ class EisensteinInt:
         r = self.real
         i = self.imaginary
 
-        plt.polar(angle, length, 'ro')
-        plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
+        if format != "":
+            plt.polar(angle, length, format)
+        else:
+            plt.polar(angle, length, 'ro')
+
+        if label != "":
+            plt.text(angle, length, label, horizontalalignment='center', verticalalignment='bottom')
+        else:
+            plt.text(angle, length, str(self), horizontalalignment='center', verticalalignment='bottom')
 
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
         plt.rgrids(np.arange(0,max_len,max_len/10), labels=[])
@@ -480,7 +487,7 @@ class EisensteinInt:
             else:
                 plt.polar(angle, length, 'bo')
             if (labels):
-                plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
+                plt.text(angle, length, str(multiple), horizontalalignment='center', verticalalignment='bottom')
 
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
         plt.rgrids(np.arange(0,max_len,max_len/10), labels=[])
@@ -530,7 +537,7 @@ class EisensteinInt:
             else:
                 plt.polar(angle, length, 'bo')
             if (labels):
-                plt.text(angle, length, '%d + %dω' % (int(r), int(i)), horizontalalignment='center', verticalalignment='bottom')
+                plt.text(angle, length, str(multiple), horizontalalignment='center', verticalalignment='bottom')
 
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
         plt.rgrids(np.arange(0,max_len,max_len/10), labels=[])
