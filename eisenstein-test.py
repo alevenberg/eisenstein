@@ -242,6 +242,16 @@ class EisensteinIntTest(unittest.TestCase):
         self.assertTrue(r1 == r2)
         self.assertTrue(q == b)
 
+    def test_divmod_brute_force(self):
+        a=EisensteinInt(3,1) # 3 + w
+        b=EisensteinInt(2, -1) # 3 + w**2
+        r1=EisensteinInt(1,0)
+        d=(a*b)+r1
+
+        q,r2 = d.divmod_brute_force(a)
+        self.assertTrue(q == b)
+        self.assertTrue(r1 == r2)
+
     def test_gcd_ints(self):
         a=EisensteinInt(12,0)
         b=EisensteinInt(6,0)
