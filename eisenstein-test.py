@@ -305,7 +305,5 @@ class EisensteinIntTest(unittest.TestCase):
 
         self.assertEqual(a.gcd(b).canonical(),p.canonical())
 
-
-
 if (__name__ == '__main__'):
     unittest.main()
