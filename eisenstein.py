@@ -25,7 +25,8 @@ class EisensteinInt:
          a.dot_product(b) - Returns the dot product.
          a.norm() - Returns an integer representing the norm.
          a.polar_form() - Returns a tuple of the radius and angle.
-         a.signum() - Returns a list o the units multiplied by the number.
+         a.sextant() - Returns the unit in the corresponding sextant.
+         a.signum() - Returns a list of the units multiplied by the number.
          EisensteinInt.units() - Returns a list of the 6 Eisenstein units.
          EisensteinInt.eisenstein_form(c) - Returns the EisensteinInt from.
             a complex number
@@ -151,6 +152,72 @@ class EisensteinInt:
 
         return q
 
+    def divmod_test(self, other):
+        if isinstance(other, int):
+            other = EisensteinInt(other)
+
+        assert(other != EisensteinInt())
+
+        a = self
+        b = other
+
+        q = a.div_test(b)
+        r = a - (q*b)
+
+        return q,r
+
+    def div_test(self, other):
+        if isinstance(other, int):
+            other = EisensteinInt(other)
+
+        assert(other != EisensteinInt())
+
+        a = self
+        b = other
+
+        numerator = a * (b.conjugate())
+        denominator = b.norm()
+
+        nr = numerator.real
+        ni = numerator.imaginary
+
+        qr = nr // denominator
+        qi = ni // denominator
+
+        candidates = []
+        q = EisensteinInt(qr, qi)
+        r = a - (q*b)
+        candidates.append((q,r))
+
+        q = EisensteinInt(qr + 1, qi)
+        r = a - (q*b)
+        candidates.append((q,r))
+
+        q = EisensteinInt(qr, qi + 1)
+        r = a - (q*b)
+        candidates.append((q,r))
+
+        q = EisensteinInt(qr + 1, qi + 1)
+        r = a - (q*b)
+        candidates.append((q,r))
+
+        return EisensteinInt.best_candidate(candidates)[0]
+
+    @staticmethod
+    def best_candidate(candidates):
+        min_r = float("inf")
+        min_c = ()
+        for c in candidates:
+            print("cq", c[0],"cr", c[1])
+            print("cr norm", c[1].norm())
+            print("-----")
+            # print(abs(c[1]))
+            c_r = c[1].norm()
+            if c_r < min_r:
+                min_r = c_r
+                min_c = c
+        return c
+
     def __lt__(self, other):
         if isinstance(other, int):
             other = EisensteinInt(other)
@@ -212,7 +279,7 @@ class EisensteinInt:
 
         for a in associates:
             # In first sextant
-            if (a.signum()[1] == EisensteinInt(1)):
+            if (a.sextant() == EisensteinInt(1)):
                 return a
 
     def complex_form(self):
@@ -275,6 +342,9 @@ class EisensteinInt:
                 angle = np.pi - angle
 
         return (r, angle)
+
+    def sextant(self):
+        return self.signum()[1]
 
     def signum(self):
         a = self.real
