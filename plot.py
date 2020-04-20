@@ -1,5 +1,6 @@
 from eisenstein import EisensteinInt
 
+plts = []
 a = EisensteinInt(-2,-2)
 a.plot_point()
 a.plot_multiples(n=1)

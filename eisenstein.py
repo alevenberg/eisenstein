@@ -450,10 +450,14 @@ class EisensteinInt:
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
         plt.rgrids(np.arange(0,max_len,max_len/10), labels=[])
 
-        plt.show()
+        if file_name != "":
+            plt.savefig(file_name)
+        else:
+            plt.show()
+            
         return plt
 
-    def plot_multiples(self, n=2, labels=True):
+    def plot_multiples(self, n=2, labels=True, file_name=""):
         max_len = 0
 
         multiples = self.get_multiples(n)
@@ -477,7 +481,10 @@ class EisensteinInt:
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
         plt.rgrids(np.arange(0,max_len,max_len/10), labels=[])
 
-        plt.show()
+        if file_name != "":
+            plt.savefig(file_name)
+        else:
+            plt.show()
 
         return plt
 
@@ -502,7 +509,7 @@ class EisensteinInt:
         return rv
 
     @staticmethod
-    def plot_list(points, primes=False, labels=False):
+    def plot_list(points, primes=False, labels=False, file_name=""):
         max_len = 0
         for pt in points:
             length, angle = pt.polar_form()
@@ -523,7 +530,11 @@ class EisensteinInt:
         plt.thetagrids(range(0, 360, 60), ('1', '1+ω', 'ω', '-1', '-ω-1', '-ω'))
         plt.rgrids(np.arange(0,max_len,max_len/10), labels=[])
 
-        plt.show()
+
+        if file_name != "":
+            plt.savefig(file_name)
+        else:
+            plt.show()
 
         return plt
 
