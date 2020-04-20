@@ -208,9 +208,6 @@ class EisensteinInt:
         min_r = float("inf")
         min_c = ()
         for c in candidates:
-            print("cq", c[0],"cr", c[1])
-            print("cr norm", c[1].norm())
-            print("-----")
             c_r = c[1].norm()
             if c_r <= min_r:
                 min_r = c_r
