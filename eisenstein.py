@@ -36,13 +36,16 @@ class EisensteinInt:
          a.is_unit() - Returns whether or not n is a unit.
 
          a.gcd(b) - Compute the greatest common divisor of a and b.
-         a.plot_point() - Plots a single point in a polar plane.
-         a.plot_multiples(n,labels) - Plots the multipls of the number n
-            degrees out and gives the option to include labels.
+         a.plot_point(file_name) - Plots a single point in a polar plane.
+            Shows plot unless given a file name to save to.
+         a.plot_multiples(n,labels, file_name) - Plots the multipls of
+            the number n degrees out and gives the option to include labels.
+            Shows plot unless given a file name to save to.
          a.get_multiples(n) - Returns a list of multiples n degrees away
 
-         EisensteinInt.plot_all(n,prime) - Plots all Eisenstein integers
-            and can highlight the prime numbers
+         EisensteinInt.plot_all(n,prime, file_name) - Plots all Eisenstein
+            integers and can highlight the prime numbers. Shows plot unless given
+            a file name to save to.
          EisensteinInt.generate_eisenstein_ints(n) - Generates all EisensteinInt
             and their multiples through brute force
     """
@@ -433,7 +436,7 @@ class EisensteinInt:
 
         return a
 
-    def plot_point(self):
+    def plot_point(self, file_name=""):
         max_len = 0
 
         length, angle = self.polar_form()
@@ -452,9 +455,10 @@ class EisensteinInt:
 
         if file_name != "":
             plt.savefig(file_name)
+            plt.clf()
         else:
             plt.show()
-            
+
         return plt
 
     def plot_multiples(self, n=2, labels=True, file_name=""):
@@ -483,6 +487,7 @@ class EisensteinInt:
 
         if file_name != "":
             plt.savefig(file_name)
+            plt.clf()
         else:
             plt.show()
 
@@ -533,15 +538,16 @@ class EisensteinInt:
 
         if file_name != "":
             plt.savefig(file_name)
+            plt.clf()
         else:
             plt.show()
 
         return plt
 
     @staticmethod
-    def plot_all(n=4, prime=False, labels=False):
+    def plot_all(n=4, primes=False, labels=False, file_name=""):
         ei = EisensteinInt.generate_eisenstein_ints(n)
-        EisensteinInt.plot_list(ei, prime, labels)
+        EisensteinInt.plot_list(ei, primes, labels, file_name)
 
     @staticmethod
     def generate_eisenstein_ints(n):
