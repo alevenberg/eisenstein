@@ -176,7 +176,7 @@ class EisensteinIntTest(unittest.TestCase):
 
         a=EisensteinInt(17,0)
         b=EisensteinInt(9,0)
-        self.assertEqual(a // b , EisensteinInt(1,0))
+        self.assertEqual(a // b , EisensteinInt(2,0))
 
         a=EisensteinInt(10,0)
         b=EisensteinInt(5,0)
@@ -256,9 +256,9 @@ class EisensteinIntTest(unittest.TestCase):
         self.assertTrue(q == b)
 
     def test_gcd(self):
-        p=EisensteinInt(1,-1)
-        q=EisensteinInt(2,1)
-        r=EisensteinInt(7,1)
+        p=EisensteinInt(3,1)
+        q=EisensteinInt(1,-1)
+        r=EisensteinInt(2,-1)
 
         assert(p.is_prime())
         assert(q.is_prime())
@@ -267,7 +267,33 @@ class EisensteinIntTest(unittest.TestCase):
         a=p*q
         b=p*r
 
-        self.assertEqual(a.gcd(b),p)
+        self.assertEqual(a.gcd(b).canonical(),p.canonical())
+
+        p=EisensteinInt(-4,-1)
+        q=EisensteinInt(2,0)
+        r=EisensteinInt(6,1)
+
+        assert(p.is_prime())
+        assert(q.is_prime())
+        assert(r.is_prime())
+
+        a=p*q
+        b=p*r
+
+        self.assertEqual(a.gcd(b).canonical(),p.canonical())
+
+        p=EisensteinInt(3,2)
+        q=EisensteinInt(-1,3)
+        r=EisensteinInt(9,1)
+
+        assert(p.is_prime())
+        assert(q.is_prime())
+        assert(r.is_prime())
+
+        a=p*q
+        b=p*r
+
+        self.assertEqual(a.gcd(b).canonical(),p.canonical())
 
 
 

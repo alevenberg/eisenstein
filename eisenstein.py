@@ -19,14 +19,15 @@ class EisensteinInt:
 
          a.associates() - Returns a list of the product of the number and
             each of the units.
+         a.canonical() - Returns the associate in the first sextant.
          a.complex_form() - Returns the complex form.
          a.conjugate() - Returns an EisensteinInt representing he conjugate.
-         a.dot_product(b) - Returns the dot product
+         a.dot_product(b) - Returns the dot product.
          a.norm() - Returns an integer representing the norm.
          a.polar_form() - Returns a tuple of the radius and angle.
-
-         EisensteinInt.units() - Returns a list of the 6 Eisenstein units
-         EisensteinInt.eisenstein_form(c) - Returns the EisensteinInt from
+         a.signum() - Returns a list o the units multiplied by the number.
+         EisensteinInt.units() - Returns a list of the 6 Eisenstein units.
+         EisensteinInt.eisenstein_form(c) - Returns the EisensteinInt from.
             a complex number
 
          a.is_even() - Returns whether or not n is even.
@@ -206,23 +207,13 @@ class EisensteinInt:
         associates = list(map(lambda x: x * self, units))
         return associates
 
-    def signum(self):
-        a = self.real
-        b = self.imaginary
-        if (a == 0 and b==0):
-            return (self, EisensteinInt(0)) # origin
-        elif (a > b and b >=0):
-            return (self, EisensteinInt(1)) # first
-        elif (b >= a and a>0):
-            return (self * EisensteinInt(0,-1), EisensteinInt(1,1)) # second
-        elif (b > 0 and 0>=a):
-            return (EisensteinInt(-1,-1) * self, EisensteinInt(0,1)) # third
-        elif (a < b and b<=0):
-            return (self * EisensteinInt(-1,0), EisensteinInt(-1)) # fourth
-        elif (b <= a and a<0):
-            return (self * EisensteinInt(0,1), EisensteinInt(-1,-1)) # fifth
-        else:
-            return (self * EisensteinInt(1,1), EisensteinInt(0,-1)) # sixth
+    def canonical(self):
+        associates = self.associates()
+
+        for a in associates:
+            # In first sextant
+            if (a.signum()[1] == EisensteinInt(1)):
+                return a
 
     def complex_form(self):
         r = self.real
@@ -284,6 +275,24 @@ class EisensteinInt:
                 angle = np.pi - angle
 
         return (r, angle)
+
+    def signum(self):
+        a = self.real
+        b = self.imaginary
+        if (a == 0 and b==0):
+            return (self, EisensteinInt(0)) # origin
+        elif (a > b and b >=0):
+            return (self, EisensteinInt(1)) # first
+        elif (b >= a and a>0):
+            return (self * EisensteinInt(0,-1), EisensteinInt(1,1)) # second
+        elif (b > 0 and 0>=a):
+            return (EisensteinInt(-1,-1) * self, EisensteinInt(0,1)) # third
+        elif (a < b and b<=0):
+            return (self * EisensteinInt(-1,0), EisensteinInt(-1)) # fourth
+        elif (b <= a and a<0):
+            return (self * EisensteinInt(0,1), EisensteinInt(-1,-1)) # fifth
+        else:
+            return (self * EisensteinInt(1,1), EisensteinInt(0,-1)) # sixth
 
     @staticmethod
     def eisenstein_form(c):
