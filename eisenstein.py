@@ -152,7 +152,7 @@ class EisensteinInt:
 
         return q
 
-    def divmod_test(self, other):
+    def divmod_brute_force(self, other):
         if isinstance(other, int):
             other = EisensteinInt(other)
 
@@ -161,12 +161,12 @@ class EisensteinInt:
         a = self
         b = other
 
-        q = a.div_test(b)
+        q = a.floor_div_brute_force(b)
         r = a - (q*b)
 
         return q,r
 
-    def div_test(self, other):
+    def floor_div_brute_force(self, other):
         if isinstance(other, int):
             other = EisensteinInt(other)
 
@@ -211,12 +211,11 @@ class EisensteinInt:
             print("cq", c[0],"cr", c[1])
             print("cr norm", c[1].norm())
             print("-----")
-            # print(abs(c[1]))
             c_r = c[1].norm()
-            if c_r < min_r:
+            if c_r <= min_r:
                 min_r = c_r
                 min_c = c
-        return c
+        return min_c
 
     def __lt__(self, other):
         if isinstance(other, int):

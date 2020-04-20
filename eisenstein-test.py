@@ -146,19 +146,6 @@ class EisensteinIntTest(unittest.TestCase):
         self.assertTrue(a > b)
         self.assertTrue(b < a)
 
-    def test_gcd_ints(self):
-        a=EisensteinInt(12,0)
-        b=EisensteinInt(6,0)
-        self.assertEqual(a.gcd(b), EisensteinInt(6,0))
-
-        a=EisensteinInt(20,0)
-        b=EisensteinInt(12,0)
-        self.assertEqual(a.gcd(b), EisensteinInt(-4,0))
-
-        a=EisensteinInt(5,0)
-        b=EisensteinInt(7,0)
-        self.assertEqual(a.gcd(b), EisensteinInt(1,0))
-
     def test_floor_div_identity(self):
         a=EisensteinInt(1,-1)
         self.assertEqual(a // a, EisensteinInt(1))
@@ -254,6 +241,19 @@ class EisensteinIntTest(unittest.TestCase):
         q,r2 = divmod(d, a)
         self.assertTrue(r1 == r2)
         self.assertTrue(q == b)
+
+    def test_gcd_ints(self):
+        a=EisensteinInt(12,0)
+        b=EisensteinInt(6,0)
+        self.assertEqual(a.gcd(b).canonical(), EisensteinInt(6,0).canonical())
+
+        a=EisensteinInt(20,0)
+        b=EisensteinInt(12,0)
+        self.assertEqual(a.gcd(b).canonical(), EisensteinInt(-4,0).canonical())
+
+        a=EisensteinInt(5,0)
+        b=EisensteinInt(7,0)
+        self.assertEqual(a.gcd(b).canonical(), EisensteinInt(1,0).canonical())
 
     def test_gcd(self):
         p=EisensteinInt(3,1)

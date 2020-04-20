@@ -6,19 +6,13 @@ r1=EisensteinInt(1,0)
 d=(a*b)+r1
 q,r2 = divmod(d, a)
 
-print(q, b)
-print(r1, r2)
+print("got:", q, "\texpected:", b)
+print("got:", r1, "\texpected:", r2)
 
 print("*********")
 
 d=(a*b)+r1
-q,r2 = d.divmod_test(a)
+q,r2 = d.divmod_brute_force(a)
 
-print(q, b)
-print(r1, r2)
-# for x in (a.gcd(b).associates()):
-#     if p == x:
-#         print("gcd in associates")
-#     print(x)
-#
-# print("P", p)
+print("got:", q, "\texpected:", b)
+print("got:", r1, "\texpected:", r2)
