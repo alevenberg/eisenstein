@@ -14,7 +14,7 @@ A python representation of the Eisenstein Integers.
 # Notes to self
 - Figuring out the division algorithm. The problem was figuring out what the floor of a number is in the Eisenstein integers. It is where the norm of the remainder is the smallest.
 - Plotting the points. Plotting the points and figuring out the translation in coordinates.
-- GCD can be up to units only - as long as it is an associate it is good or you can pick a canonical sextant representation.
+- Calculating and confirming the GCD. It can be up to units only - as long as it is an associate it is good or you can pick a canonical sextant representation.
 - Bug: I was looking for a minimum but returned the element of the last iteration in best_candidate()
 
 # Sources
