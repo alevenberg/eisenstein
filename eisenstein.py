@@ -3,6 +3,7 @@ from math import sqrt, pi, sin, cos, atan
 import matplotlib.pyplot as plt
 import numpy as np
 import mpmath
+
 class EisensteinInt:
     """
     Stores the Eisenstein integer in the form a + bω
