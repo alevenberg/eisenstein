@@ -1,6 +1,6 @@
 # eisenstein
 
-A python representation of the Eisenstein Integers
+A python representation of the Eisenstein Integers.
 
 ## File structure
 ```
@@ -8,7 +8,7 @@ A python representation of the Eisenstein Integers
 ├── eisenstein.py -----------------------> EisensteinInt class
 ├── plot.py -----------------------------> generate sample plots
 ├── plots -------------------------------> stores the generated plots
-└── requirements.txt ---------------------> package requirements
+└── requirements.txt --------------------> package requirements
 ```
 
 # Notes to self

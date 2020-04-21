@@ -10,13 +10,14 @@ class EisensteinInt:
 
     Create Eisenstein Integer by:
 	     a = EisensteinInt(5,7)  # Create (5 + 7ω)
-	     a = EisensteinInt(13)  # Create (13 + 0ω)
+	     a = EisensteinInt(13)  # Create (13)
 
     Functions implemented
          Basic functions: init(), ==, hash(),  str(), <, >, <=, >=
 	     Arithmetic functions: abs(), +, divmod(), //, %, *, -
 
-         a.debug_str() - Returns a simple debug string to describe the object
+         a.debug_str() - Returns a simple debug string to describe the
+            data members.
 
          a.associates() - Returns a list of the product of the number and
             each of the units.
@@ -573,17 +574,3 @@ class EisensteinInt:
                     eis.add(m)
                 eis.add(ei)
         return eis
-
-
-# Sources
-# http://math.bu.edu/people/jsweinst/Teaching/MA341Spring18/MA341Notes.pdf
-# https://proofwiki.org/wiki/Norm_of_Eisenstein_Integer
-# https://arxiv.org/pdf/1602.09106.pdf
-# https://doi.org/10.1016/j.jsc.2004.02.006
-# https://en.wikipedia.org/wiki/Eisenstein_integer
-# http://hackage.haskell.org/package/arithmoi-0.8.0.0/docs/Math-NumberTheory-Quadratic-EisensteinIntegers.html
-# https://thekeep.eiu.edu/cgi/viewcontent.cgi?article=3459&context=theses
-# https://mathworld.wolfram.com/EisensteinPrime.html
-# https://stackoverflow.com/questions/28417604/plotting-a-line-from-a-coordinate-with-and-angle
-#https://pdfs.semanticscholar.org/f871/a066a9a75bcf3435bc1c5960bd6e6d53502a.pdf
-# https://en.wiktionary.org/wiki/Eisenstein_integer#English
