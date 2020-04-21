@@ -3,11 +3,13 @@
 A python representation of the Eisenstein Integers
 
 ## File structure
+```
 ├── eisenstein-test.py ------------------> EisensteinInt unit tests
 ├── eisenstein.py -----------------------> EisensteinInt class
 ├── plot.py -----------------------------> generate sample plots
 ├── plots -------------------------------> stores the generated plots
 └── requirements.txt ---------------------> package requirements
+```
 
 # Notes to self
 - Figuring out the division algorithm. The problem was figuring out what the floor of a number is in the Eisenstein integers. It is where the norm of the remainder is the smallest.
