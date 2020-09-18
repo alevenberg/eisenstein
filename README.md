@@ -1,6 +1,6 @@
 # eisenstein
 
-A python representation of the Eisenstein Integers.
+A python representation of the [Eisenstein Integers](https://en.wikipedia.org/wiki/Eisenstein_integer).
 
 ## File structure
 ```
